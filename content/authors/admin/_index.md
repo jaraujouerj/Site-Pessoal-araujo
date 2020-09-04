@@ -14,11 +14,15 @@ role: Professor Associado do Departamento de Engenharia de Sistemas e Computaç�
 
 # Organizations/Affiliations
 organizations:
+- name: Departamento de Sistemas e Computação
+  url: "http://www.desc.eng.uerj.br"
+- name: Faculdade de Engenharia
+  url: "http://www.eng.uerj.br"
 - name: UERJ
-  url: ""
+  url: "http://www.uerj.br"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: Meus interesses de pesquisa incluem desenvolvimento de software para fotogrametria e software livre.
 
 interests:
 - Desenvolvimento de software para fotogrametria
@@ -50,13 +54,10 @@ social:
   link: '#contact'  # For a direct email link, use "mailto:test@example.org".
 - icon: twitter
   icon_pack: fab
-  link: https://twitter.com/GeorgeCushen
-- icon: google-scholar
-  icon_pack: ai
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://twitter.com/joaoaraujobr
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/jaraujouerj
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
 # - icon: cv
@@ -68,15 +69,15 @@ email: "araujo@eng.uerj.br"
 
 # Organizational groups that you belong to (for People widget)
 #   Set this to `[]` or comment out if you are not using People widget.
-user_groups:
-- Researchers
-- Visitors
+#user_groups:
+#- Researchers
+#- Visitors
 ---
 
-Meu nome é João Araujo e sou Professor Associado na Universidade do Estado do Rio de Janeiro, mais especificamente no Departamento de Engenharia de Sistemas e Computação (Desc). Entrei na UERJ em 1990 e tenho doutorado em "Informatique” pela Université de Versailles Saint-Quentin-En-Yvelines, França, obtido em 1999.
+Meu nome é João Araujo e sou Professor Associado na Universidade do Estado do Rio de Janeiro, mais especificamente no Departamento de Engenharia de Sistemas e Computação (Desc). Entrei na UERJ por concurso em 1990 e tenho doutorado em Engenharia de Computação pela **Université de Versailles Saint-Quentin-En-Yvelines, França**, obtido em 1999.
 
-Em 2013-2014 fiz meu pós-doutorado na École Nationale des Sciences Géographique (ENSG), França, onde trabalhei com o software de fotogrametria MicMac.
+Em 2013-2014 fiz meu pós-doutorado na **École Nationale des Sciences Géographique (ENSG)**, França, onde trabalhei com o software de fotogrametria MicMac.
 
 Neste site apresento as disciplinas que leciono nesta universidade e algumas coisas de interesse pessoal.
 
-Sou um entusiasta de Software Livre e uso no trabalho e em casa sistemas Linux (Ubuntu) e trabalho ativamente no desenvolvimento do software de fotogrametria digital E-foto.
+Sou um entusiasta de Software Livre e uso no trabalho e em casa sistemas Linux (Ubuntu) e trabalho ativamente no desenvolvimento do software de fotogrametria digital **E-foto**.
