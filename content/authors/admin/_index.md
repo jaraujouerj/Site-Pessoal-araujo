@@ -1,6 +1,6 @@
 ---
 # Display name
-title: Nelson Bighetti
+title: João Araujo
 
 # Username (this should match the folder name)
 authors:
@@ -10,32 +10,35 @@ authors:
 superuser: true
 
 # Role/position
-role: Professor of Artificial Intelligence
+role: Professor Associado do Departamento de Engenharia de Sistemas e Computação
 
 # Organizations/Affiliations
 organizations:
-- name: Stanford University
+- name: UERJ
   url: ""
 
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Desenvolvimento de software para fotogrametria
+- Sofwtare Livre
+- Linguagens de Programação
 
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
-    year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
+  - course: Pós-Doutorado em Fotogrametria Digital
+    institution: École Nationale des Sciences Géographiques, França
+    year: 2014
+  - course: Dr. em Computação
+    institution: Université de Versailles Saint-Quentin-en-Yvelines, França
+    year: 1999
+  - course: Mestre em Engenharia Elétrica
+    institution: COPPE/UFRJ
+    year: 1992
+  - course: Graduação em Engenharia Eltrônica
+    institution: UFRJ
+    year: 1988
 
 # Social/Academic Networking
 # For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
@@ -61,7 +64,7 @@ social:
 #   link: files/cv.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-email: ""
+email: "araujo@eng.uerj.br"
 
 # Organizational groups that you belong to (for People widget)
 #   Set this to `[]` or comment out if you are not using People widget.
@@ -70,6 +73,10 @@ user_groups:
 - Visitors
 ---
 
-Nelson Bighetti is a professor of artificial intelligence at the Stanford AI Lab. His research interests include distributed robotics, mobile computing and programmable matter. He leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Meu nome é João Araujo e sou Professor Associado na Universidade do Estado do Rio de Janeiro, mais especificamente no Departamento de Engenharia de Sistemas e Computação (Desc). Entrei na UERJ em 1990 e tenho doutorado em "Informatique” pela Université de Versailles Saint-Quentin-En-Yvelines, França, obtido em 1999.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
+Em 2013-2014 fiz meu pós-doutorado na École Nationale des Sciences Géographique (ENSG), França, onde trabalhei com o software de fotogrametria MicMac.
+
+Neste site apresento as disciplinas que leciono nesta universidade e algumas coisas de interesse pessoal.
+
+Sou um entusiasta de Software Livre e uso no trabalho e em casa sistemas Linux (Ubuntu) e trabalho ativamente no desenvolvimento do software de fotogrametria digital E-foto.
