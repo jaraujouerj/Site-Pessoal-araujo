@@ -10,11 +10,11 @@ authors:
 superuser: true
 
 # Role/position
-role: Professor Associado do Departamento de Engenharia de Sistemas e Computação
+role: Professor Associado
 
 # Organizations/Affiliations
 organizations:
-- name: Departamento de Sistemas e Computação
+- name: Depto. de Eng. de Sistemas e Computação
   url: "http://www.desc.eng.uerj.br"
 - name: Faculdade de Engenharia
   url: "http://www.eng.uerj.br"
@@ -40,7 +40,7 @@ education:
   - course: Mestre em Engenharia Elétrica
     institution: COPPE/UFRJ
     year: 1992
-  - course: Graduação em Engenharia Eltrônica
+  - course: Graduação em Engenharia Eletrônica
     institution: UFRJ
     year: 1988
 
