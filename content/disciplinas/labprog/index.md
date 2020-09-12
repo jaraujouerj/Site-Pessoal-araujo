@@ -2,21 +2,21 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Laboratório de Programação"
-summary: ""
+summary: "Seg.: 10:40 até 12:20h Sex.: 08:50 até 10:30h "
 authors: []
-tags: [Programação, C]
+tags: []
 categories: []
-date: 2020-09-06T01:46:35-03:00
+date: 2020-09-07T17:24:01-03:00
 
 # Optional external URL for project (replaces project detail page).
-internal_link: ""
+external_link: "labprog/"
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
 image:
-  caption: "LabProg"
-  focal_point: "smart"
+  caption: ""
+  focal_point: ""
   preview_only: false
 
 # Custom links (optional).
@@ -39,3 +39,6 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
+Seg.: 10:40-12:20h
+
+Sex.:08:50-10:30h
