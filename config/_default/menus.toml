@@ -17,8 +17,13 @@
   name = "Livros"
   url = "#livros"
   weight = 25
-  
+ 
   [[main]]
+  name = "Textos"
+  url = "#posts"
+  weight = 28 
+ 
+ [[main]]
   name = "Traduções"
   url = "#traducoes"
   weight = 28
