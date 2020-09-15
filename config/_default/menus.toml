@@ -14,13 +14,23 @@
   weight = 20
   
 [[main]]
+  name = "Livros"
+  url = "#livros"
+  weight = 25
+  
+  [[main]]
+  name = "Traduções"
+  url = "#traducoes"
+  weight = 28
+  
+[[main]]
   name = "Projetos"
   url = "#projects"
   weight = 30
 
 [[main]]
-  name = "Posts"
-  url = "#posts"
+  name = "Vídeos"
+  url = "#videos"
   weight = 40
 
 [[main]]

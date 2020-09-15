@@ -1,15 +1,15 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: Introdução À Programação E Aos Algoritmos
+title: Introdução à Programação e aos Algoritmos
 subtitle: ''
 summary: ''
 authors:
-- J.A. Ribeiro
+- João Araujo Ribeiro
 tags: []
 categories: []
 date: '2019-01-01'
-lastmod: 2020-09-12T18:15:39-03:00
+lastmod: 2020-09-12T19:51:08-03:00
 featured: false
 draft: false
 
@@ -27,10 +27,22 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2020-09-12T21:15:39.661909Z'
+publishDate: '2020-09-12T22:51:08.125294Z'
 publication_types:
 - 5
-abstract: ''
+abstract: Que tal aprender os fundamentos para criação e aplicação de programas? Com
+  ênfase na linguagem Python, Introdução à Programação e aos Algoritmos oferece os
+  fundamentos essenciais para criação de programas e da consequente aplicação às mais
+  variadas áreas.   Com linguagem simples e direta, este livro aborda conceitos, métodos
+  e linguagens necessários à composição de códigos de programação. João Araujo Ribeiro
+  parte da definição de conteúdos básicos – como bit, byte, códigos binários, octadecimais
+  e hexadecimais – para, então, chegar aos algoritmos.   Além disso, o livro traz
+  exercícios complementares, dicas, orientações e numerosas ilustrações ao programador
+  em formação, que enriquecem a experiência com o assunto, e esclarece dúvidas sobre
+  computadores, programação e seu funcionamento. O autor apresenta, ainda, a evolução
+  da tecnologia e algumas das personalidades que contribuíram para o avanço desse
+  campo.   Após a leitura, o estudante será capaz de escrever programas em um computador
+  real e verificar imediatamente os resultados de sua criação.
 publication: '*LTC*'
-url_pdf: https://books.google.com.br/books?id=cUuOxgEACAAJ
+url_pdf: https://www.grupogen.com.br/introducao-a-programacao-e-aos-algoritmos
 ---

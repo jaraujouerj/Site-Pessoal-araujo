@@ -44,6 +44,8 @@ slides: ""
 
 {{< cite page="/publication/stallings-2010-arquitetura" view="4" >}}
 
+{{< cite page="/publication/jorgensen" view="4" >}} Este último, disponível gratuitamente no site do autor.
+
 ## Sala de Aula
 Neste semestre, devido à pandemia, todas as aulas serão online. Usaremos o
 [google classroom](https://classroom.google.com/) para a parte offline, 
