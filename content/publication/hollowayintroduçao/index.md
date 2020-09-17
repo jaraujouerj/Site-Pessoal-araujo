@@ -32,5 +32,11 @@ publication_types:
 - 5
 abstract: ''
 publication: '*LTC*'
-url_pdf: https://www.saraiva.com.br/introducao-a-programacao-para-engenharia-resolvendo-problemas-com-algoritmos-191680/p
+url_pdf: 
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.saraiva.com.br/introducao-a-programacao-para-engenharia-resolvendo-problemas-com-algoritmos-191680/p
 ---

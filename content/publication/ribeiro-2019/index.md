@@ -44,5 +44,10 @@ abstract: Que tal aprender os fundamentos para criação e aplicação de progra
   campo.   Após a leitura, o estudante será capaz de escrever programas em um computador
   real e verificar imediatamente os resultados de sua criação.
 publication: '*LTC*'
-url_pdf: https://www.grupogen.com.br/introducao-a-programacao-e-aos-algoritmos
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.grupogen.com.br/introducao-a-programacao-e-aos-algoritmos
 ---

@@ -32,6 +32,11 @@ publishDate: '2020-09-13T20:57:58.699321Z'
 publication_types:
 - 5
 abstract: ''
-publication: '*LTC*'
-url_pdf: https://www.amazon.com.br/C-2-0-Marques/dp/8521615574
+publication: '*LTC*' 
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.amazon.com.br/C-2-0-Marques/dp/8521615574
 ---

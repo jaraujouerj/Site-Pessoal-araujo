@@ -66,8 +66,3 @@ subtitle = "Assuntos diversos"
  # CSS class.
  css_class = ""
 +++
-
- - icon_pack: fab
-    icon: medium
-    name: Originally published on Medium
-    url: 'https://medium.com'

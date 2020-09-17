@@ -32,5 +32,10 @@ publication_types:
 - 5
 abstract: ''
 publication: '*LTC*'
-url_pdf: https://www.grupogen.com.br/linguagem-c
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.grupogen.com.br/linguagem-c
 ---

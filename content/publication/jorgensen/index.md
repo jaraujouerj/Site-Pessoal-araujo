@@ -9,7 +9,7 @@ authors:
 tags: []
 categories: []
 date: '2020-01-01'
-lastmod: 2020-09-15T15:24:50-03:00
+lastmod: 2020-09-15T19:33:56-03:00
 featured: false
 draft: false
 
@@ -27,10 +27,10 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2020-09-15T18:24:50.613790Z'
+publishDate: '2020-09-15T22:33:56.462177Z'
 publication_types:
 - 5
 abstract: ''
 publication: ''
-url_pdf: https://www.saraiva.com.br/introducao-a-programacao-para-engenharia-resolvendo-problemas-com-algoritmos-191680/p
+url_pdf: http://www.egr.unlv.edu/~ed/assembly64.pdf
 ---

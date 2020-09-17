@@ -32,5 +32,10 @@ publication_types:
 - 5
 abstract: ''
 publication: '*LTC*'
-url_pdf: ''
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.amazon.com.br/Objetos-Abstra%C3%A7%C3%A3o-Estrutura-Projeto-Usando/dp/852161604X
 ---

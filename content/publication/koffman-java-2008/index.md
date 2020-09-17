@@ -32,5 +32,9 @@ publication_types:
 - 5
 abstract: ''
 publication: '*LTC*'
-url_pdf: ''
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://www.livrariaitagyba.com.br/livro-objetos-abstracao-estrutura-de-dados-e-projetos-usando-java-50-9788521616030,ko3518.html
 ---
