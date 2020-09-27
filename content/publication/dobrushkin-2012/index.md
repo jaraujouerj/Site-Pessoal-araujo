@@ -3,7 +3,7 @@
 
 title: Métodos para análise de algoritmos
 subtitle: ''
-summary: ''
+summary: 'O conteúdo original deste livro é parte das aulas ministradas pelo autor, renomado professor e pesquisador, com experiência em ensino de disciplinas como matemática aplicada, estatística, probabilidade, álgebra linear, pré-cálculo e estruturas de dados e análise de algoritmos. Combinando sólida teoria com ferramentas de software, Métodos para Análise de Algoritmos oferece material indispensável às atividades técnicas e profissionais modernas. A obra fornece informações sobre várias ferramentas úteis, bem como muitos tutoriais – como frações continuadas, funções de uma variável complexa, cálculos numéricos e integração de Stieltjes. Além disso, o livro oferece equilibradamente teoria, exemplos e grande quantidade de exercícios inéditos, voltados a diversas áreas'
 authors:
 - V.A. Dobrushkin
 tags: []
@@ -38,4 +38,9 @@ links:
     icon: wallet
     name: comprar
     url: https://www.amazon.com.br/dp/B073DPCW8B/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=258588
 ---

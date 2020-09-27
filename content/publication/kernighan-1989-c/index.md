@@ -38,4 +38,10 @@ abstract: Descreve o C do modo como foi definido pelo padrão ANSI. Para auxilia
   de programação importantes.As principais rotinas de I/O são apresentadas e inclui
   um utilíssimo Manual de Referência C.
 publication: '*Campus*'
+
+links:
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=53260
 ---

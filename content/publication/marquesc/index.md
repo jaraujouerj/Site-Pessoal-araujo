@@ -39,4 +39,9 @@ links:
     icon: wallet
     name: comprar
     url: https://www.amazon.com.br/C-2-0-Marques/dp/8521615574
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=144527
 ---

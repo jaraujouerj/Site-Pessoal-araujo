@@ -3,7 +3,7 @@
 
 title: Objetos, Estruturas de Dados e Projetos usando C++
 subtitle: ''
-summary: ''
+summary: 'Objetos, Abstração, Estrutura de Dados e Projeto usando C ++ é destinado ao segundo curso de programação, especialmente os que utilizam projeto orientado a objetos (POO) no estudo de estruturas de dados e algoritmos. O livro pode ser utilizado no terceiro curso de algoritmos e estruturas de dados em escolas com uma seqüência de três cursos. Além de abordar estruturas de dados e algoritmos básicos (listas, pilhas, filas, árvores, recursão, ordenação), existem capítulos sobre conjuntos e mapas, árvores de busca binária balanceadas e grafos. Embora é de supor que a maioria dos leitores tenha concluído um primeiro curso de programação em C++, há um extenso capítulo de revisão para os que talvez tivessem feito um primeiro curso de programação com uma outra linguagem orientada a objetos, ou para os que precisem de uma revisão em C++'
 authors:
 - Elliot B. ;Wolfgang, Paul A. T. Koffman
 tags: []
@@ -38,4 +38,9 @@ links:
     icon: wallet
     name: comprar
     url: https://www.amazon.com.br/Objetos-Abstra%C3%A7%C3%A3o-Estrutura-Projeto-Usando/dp/852161604X
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=258903
 ---

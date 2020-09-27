@@ -39,4 +39,10 @@ links:
     icon: wallet
     name: comprar
     url: https://www.saraiva.com.br/introducao-a-programacao-para-engenharia-resolvendo-problemas-com-algoritmos-191680/p
+
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=163733
 ---

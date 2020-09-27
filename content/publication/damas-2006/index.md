@@ -3,7 +3,7 @@
 
 title: Linguagem C
 subtitle: ''
-summary: ''
+summary: 'Esta obra cobre, de forma didática, a totalidade da Linguagem C, desde os aspectos mais básicos até os aspectos mais avançados. s assuntos são apresentados passo a passo com exemplos explicativos e com variações, de modo a tornarem-se acessíveis mesmo aos leitores sem qualquer experiência de programação. São tratados, com especial cuidado, os tópicos em que a Linguagem C é mais utilizada: escrita de procedimentos e funções; vetores e strings; ponteiros; arquivos; estruturas; memória dinâmica; e macros. Trata-se de uma verdadeira referência completa da Linguagem C.'
 authors:
 - L.M.D. Damas
 tags: []
@@ -38,4 +38,9 @@ links:
     icon: wallet
     name: comprar
     url: https://www.grupogen.com.br/linguagem-c
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=257941
 ---

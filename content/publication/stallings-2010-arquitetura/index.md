@@ -3,7 +3,21 @@
 
 title: Arquitetura e organização de computadores
 subtitle: ''
-summary: ''
+summary: 'Arquitetura e organização de computadores, de William Stallings, além de
+  apresentar as principais mudanças, inovações e melhorias na área de computação por
+  meio de uma abordagem ampla e abrangente da área de arquitetura de computadores,
+  também promove uma profunda reflexão sobre os fundamentos da área, estabelecendo
+  relações com questões contemporâneas de design computacional. Nesta edição, o autor
+  aborda a ampla adoção do funcionamento da GPGPUs em conjunto com as CPUs tradicionais
+  para lidar com as inúmeras aplicações que envolvem grandes conjuntos de dados, processadores
+  multicore, cloud computing, a utilização da tecnologia e organização de memória
+  flash para memória interna e externa, e a tecnologia Direct cache access, desenvolvida
+  pela Intel e por outros fabricantes para proporcionar rendimento melhor que a tradicional
+  abordagem de acesso de memória direta (direct memory access). Complementado por
+  inúmeros exercícios de aprendizagem, este livro é indicado para estudantes de ciência
+  da computação, engenharia da computação e sistemas de informação. Todavia, por sua
+  abrangência e didática, também é leitura indispensável para profissionais da área
+  que desejem aprofundar e atualizar seus conhecimentos.'
 authors:
 - W. Stallings
 tags: []
@@ -30,20 +44,17 @@ projects: []
 publishDate: '2020-09-12T21:53:47.381731Z'
 publication_types:
 - 5
-abstract: Arquitetura e organização de computadores, de William Stallings, além de
-  apresentar as principais mudanças, inovações e melhorias na área de computação por
-  meio de uma abordagem ampla e abrangente da área de arquitetura de computadores,
-  também promove uma profunda reflexão sobre os fundamentos da área, estabelecendo
-  relações com questões contemporâneas de design computacional. Nesta edição, o autor
-  aborda a ampla adoção do funcionamento da GPGPUs em conjunto com as CPUs tradicionais
-  para lidar com as inúmeras aplicações que envolvem grandes conjuntos de dados, processadores
-  multicore, cloud computing, a utilização da tecnologia e organização de memória
-  flash para memória interna e externa, e a tecnologia Direct cache access, desenvolvida
-  pela Intel e por outros fabricantes para proporcionar rendimento melhor que a tradicional
-  abordagem de acesso de memória direta (direct memory access). Complementado por
-  inúmeros exercícios de aprendizagem, este livro é indicado para estudantes de ciência
-  da computação, engenharia da computação e sistemas de informação. Todavia, por sua
-  abrangência e didática, também é leitura indispensável para profissionais da área
-  que desejem aprofundar e atualizar seus conhecimentos.
+abstract: 
 publication: '*PRENTICE HALL BRASIL*'
+
+links:
+  - icon_pack: fa
+    icon: wallet
+    name: comprar
+    url: https://loja.grupoa.com.br/bibliotecauniversitaria/arquitetura-e-organizacao-de-computadores9788543020532-p1004826?gclid=CjwKCAjwkoz7BRBPEiwAeKw3q_aaMIvm2xkoFhCvocNgHS5jwENvnhfaOC67ejzY-eUJ5u-uDAe9hRoCPM0QAvD_BwE
+  
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius 2ª ed.
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=147157
 ---

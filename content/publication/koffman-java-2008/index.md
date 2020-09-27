@@ -37,4 +37,9 @@ links:
     icon: wallet
     name: comprar
     url: https://www.livrariaitagyba.com.br/livro-objetos-abstracao-estrutura-de-dados-e-projetos-usando-java-50-9788521616030,ko3518.html
+
+  - icon_pack: fa
+    icon: book-open
+    name: Rede Sirius - em inglês
+    url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=145239
 ---
