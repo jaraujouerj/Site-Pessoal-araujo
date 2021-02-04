@@ -8,7 +8,7 @@ authors: []
 tags: []
 categories: []
 date: 2020-09-15T18:50:20-03:00
-lastmod: 2020-09-15T18:50:20-03:00
+lastmod: 2021-01-29T15:50:20-03:00
 featured: false
 draft: false
 
@@ -38,10 +38,10 @@ Assim apareceu a possibilidade de usar o ffmpeg na linha de comando. Aqui voiu m
 2. Anoto os tempos que gostaria de cortar da versão final.
 3. Uso o comando: `ffmpeg` para cortar cada trecho, numerando sequencialmente cada um deles.
 4. Transformo cada trecho para o formato `ts`, pois o formato mp4 não é concatenável.
-5. Concanteno tudo em um arquivo mp4 usando o `ffmpeg`.
+5. Concateno tudo em um arquivo mp4 usando o `ffmpeg`.
 
 
-### Comandos
+### Cortar trechos de um vídeo
 Para extrair cada trecho, uso:
 ```
 ffmpeg -i video_original.mp4 -vcodec copy -acodec copy -ss 00:34:14 -t 00:15:00 trecho001.mp4
@@ -58,8 +58,21 @@ Para concatenar uso o comando:
 ffmpeg -i "concat:trecho1.ts|trecho2.ts" -c copy -bsf:a aac_adtstoasc output.mp4
 ```
 
+### Atrasar o vídeo em relação ao aúdio
+Para atrasar um vídeo em 1,04 segundos:
+```
+ffmpeg -i original.mp4 -itsoffset 1.04 -i original.mp4 -map 1:v -map 0:a -c copy video-saida.mp4
+```
+
+### Atrasar o aúdio em relação ao vídeo
+Para atrasar um aúdio de 1,04 segundos em relação ao vídeo
+```
+ffmpeg -i original.mp4 -itsoffset 1.04 -i original.mp4 -map 0:v -map 1:a -c copy synced.avi
+```
+
 ### Referências:
 1. [Como copiar trechos de um vídeo no linux com o ffmpeg](https://elias.praciano.com/2018/03/como-copiar-trechos-de-um-video-no-linux-com-o-ffmpeg/)
 2. [Ffmpeg concatenate](https://trac.ffmpeg.org/wiki/Concatenate)
-
+3. [No ffmpeg, como atrasar apenas o áudio de um vídeo .mp4 sem converter o áudio?](https://qastack.com.br/superuser/982342/in-ffmpeg-how-to-delay-only-the-audio-of-a-mp4-video-without-converting-the-audio)
+4. [Fixing audio sync with ffmpeg](http://alien.slackbook.org/blog/fixing-audio-sync-with-ffmpeg/)
 *That's all!*
