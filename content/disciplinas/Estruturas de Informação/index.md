@@ -2,7 +2,7 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: Estruturas de Informação
-summary: "Seg.: 08:50  até 10:30h Sex.: 10:40 até 12:20h"
+summary: "Sex.: 08:50  até 12:20h"
 authors: [João Araujo]
 tags: [Programação, Estruturas de Informação]
 categories: []
@@ -40,19 +40,19 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
-Neste curso estudaremos algumas estruturas de dados essenciais. Para isso, vamos implementar a interface 
+Neste curso estudaremos algumas estruturas de dados essenciais. Para isso, vamos implementar a interface
 dessas estruturas básicas usando diferentes recursos. Todo o curso é dado em pseudocódigo, mas estes são baseados na linguagem Python.
 
 ## Livro-texto
 
-Este curso é baseado no livro 
+Este curso é baseado no livro
 Open data Structrures, de **Pat Morin**. \
 Este é um livro de código aberto e gratuito.
 O livro foi traduzido para o português num esforço coletivo e colaborativo com antigos alunos deste curso:
 - {{< icon name="python" pack="fab" >}}[Estruturas de Dados Abertas (em pseudocódigo)](http://www.araujo.eng.uerj.br/opendata/ods-ptbr-python.pdf)
 - {{< icon name="java" pack="fab" >}}[Estruturas de Dados Abertas (em C++)](http://www.araujo.eng.uerj.br/opendata/ods-ptbr-cpp.pdf)
 - {{< icon name="cpp" pack="fab" >}}[Estruturas de Dados Abertas (em Java)](http://www.araujo.eng.uerj.br/opendata/ods-ptbr-java.pdf)
-  
+
 É possível também obter os fontes em Latex deste livro de dois repositórios guthub:
 - Na versão em português, traduzida aqui na UERJ:\
   {{< icon name="github" pack="fab" >}} [meu repositório, com a versão em português](https://github.com/jaraujouerj/Estruturas-de-Dados-Abertos)
@@ -61,7 +61,7 @@ O livro foi traduzido para o português num esforço coletivo e colaborativo com
 
 ## Sala de Aula
 Neste semestre, devido à pandemia, todas as aulas serão online. Usaremos o
-[google classroom](https://classroom.google.com/) para a parte offline, 
+[google classroom](https://classroom.google.com/) para a parte offline,
 com encontros online pelo [meet](https://meet.google.com/).
 
 A sala do classroom é divulgada com o confirmação de sua inscrição na disciplina.
@@ -72,8 +72,7 @@ pois ele facilita a comunicação, enviando alertas quando alguma tarefa for pos
 
 ## Horário
 
-- {{< icon name="clock" pack="far" >}} Segundas-feiras: M3M4 (08:50-10:00h)
-- {{< icon name="clock" pack="far" >}} Sextas-feiras: M5M6 (10:40-12:20h)
+- {{< icon name="clock" pack="far" >}} Sextas-feiras: M3M4M5M6 (08:40-12:20h)
 
 ## Avaliação
   - Duas provas P<sub>1</sub> e P<sub>2</sub> (peso 6)
@@ -87,7 +86,7 @@ $$Média= {0.6*\frac{1}{2}\sum_{n=1}^{2}{P_n}}+0.2*T+0.1*\frac{1}{N}\sum_{n=1}^{
 $$Média \ge 7 \implies aprovado$$
 $$Média \lt 7 \implies Prova Final$$
 
-#### Média com prova final 
+#### Média com prova final
 $$Média Final= \frac{Média+PF}{2}$$
 
 $$Média Final \ge 5 \implies aprovado$$
@@ -96,5 +95,3 @@ $$Média \lt 5 \implies reprovado$$
 ## Simulador online de programas Python
 Você pode usar este simulador para pequenos programas escritos em Python {{< icon name="python" pack="fab" >}}:
 [Simulador Python](http://www.pythontutor.com/visualize.html#mode=edit)
-
-

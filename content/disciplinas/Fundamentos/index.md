@@ -2,7 +2,7 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Fundamentos de Computadores Digitais"
-summary: "Seg: 13:20 até 15:10 Sex: 13:20 até 16:00"
+summary: "Seg: 09:40 até 11:30 Ter: 8:50 até 11:30"
 authors: []
 tags: [Programação, Hardware]
 categories: []
@@ -48,7 +48,7 @@ slides: ""
 
 ## Sala de Aula
 Neste semestre, devido à pandemia, todas as aulas serão online. Usaremos o
-[google classroom](https://classroom.google.com/) para a parte offline, 
+[google classroom](https://classroom.google.com/) para a parte offline,
 com encontros online pelo [meet](https://meet.google.com/).
 
 A sala do classroom é divulgada com o confirmação de sua inscrição na disciplina.
@@ -59,8 +59,8 @@ pois ele facilita a comunicação, enviando alertas quando alguma tarefa for pos
 
 ## Horário
 
-- {{< icon name="clock" pack="far" >}} Segundas-feiras: T2T3 (13:20-15:10h)
-- {{< icon name="clock" pack="far" >}} Sextas-feiras: T2T3T4 (13:20-16:00h)
+- {{< icon name="clock" pack="far" >}} Segundas-feiras: (9:40-11:30h)
+- {{< icon name="clock" pack="far" >}} Terças-feiras:  (08:50-11:30h)
 
 ## Avaliação
   - Duas provas P<sub>1</sub> e P<sub>2</sub> (peso 7)
@@ -73,7 +73,7 @@ $$Média= {0.7*\frac{1}{2}\sum_{n=1}^{2}{P_n}}+0.2*T+0.1*\frac{1}{N}\sum_{n=1}^{
 $$Média \ge 7 \implies aprovado$$
 $$Média \lt 7 \implies Prova Final$$
 
-#### Média com prova final 
+#### Média com prova final
 $$Média Final= \frac{Média+PF}{2}$$
 
 $$Média Final \ge 5 \implies aprovado$$
