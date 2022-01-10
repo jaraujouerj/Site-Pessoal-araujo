@@ -2,7 +2,7 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Fundamentos de Computadores Digitais"
-summary: "Seg: 09:40 até 11:30 Ter: 8:50 até 11:30"
+summary: ""
 authors: []
 tags: [Programação, Hardware]
 categories: []

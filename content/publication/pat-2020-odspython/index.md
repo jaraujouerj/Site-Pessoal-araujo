@@ -27,9 +27,9 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2020-09-12T23:09:32.332085Z'
+publishDate: '2021-10-19T22:38:13.023456Z'
 publication_types:
-- 5
+- '5'
 abstract: Um livro open-source sobre estruturas de dados.
 publication: ''
 url_pdf: http://www.araujo.eng.uerj.br/opendata/ods-ptbr-python.pdf

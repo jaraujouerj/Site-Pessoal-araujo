@@ -2,7 +2,7 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Laboratório de Programação"
-summary: "Qua.: 14:20 até 16:00h Qui.: 16:10 até 17:50h "
+summary: "Qui.: 8:50 até 12:20h "
 authors: []
 tags: []
 categories: []
@@ -39,6 +39,4 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
-Qua.: 14:20-16:00h
-
-Qui.: 16:10-17:50h
+Qui.: 8:50-12:30h

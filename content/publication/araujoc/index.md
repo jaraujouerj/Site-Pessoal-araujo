@@ -1,15 +1,16 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: Estruturas de Dados Abertas (em C++)
+title: Ponteiros e Arrays em C
 subtitle: ''
 summary: ''
 authors:
-- Pat Morin
+- Ted Jensen
+- João Araujo
 tags: []
 categories: []
-date: '2020-01-01'
-lastmod: 2020-09-12T20:09:34-03:00
+date: '2021-01-01'
+lastmod: 2021-10-19T19:38:34-03:00
 featured: false
 draft: false
 
@@ -27,10 +28,10 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2021-10-19T22:38:13.159123Z'
+publishDate: '2021-10-19T22:38:34.778115Z'
 publication_types:
 - '5'
-abstract: Um livro open-source sobre estruturas de dados.
+abstract: Um livro open-source sobre ponteiros em C.
 publication: ''
-url_pdf: http://www.araujo.eng.uerj.br/opendata/ods-ptbr-cpp.pdf
+url_pdf: http://www.araujo.eng.uerj.br/c/ponteiros-em-c.pdf
 ---

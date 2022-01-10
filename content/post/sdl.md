@@ -1,15 +1,14 @@
 ---
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
-title: Estruturas de Dados Abertas (em C++)
-subtitle: ''
-summary: ''
-authors:
-- Pat Morin
+title: "Como usar a SDL no Linux"
+subtitle: ""
+summary: ""
+authors: []
 tags: []
 categories: []
-date: '2020-01-01'
-lastmod: 2020-09-12T20:09:34-03:00
+date: 2021-05-05T19:09:50-03:00
+lastmod: 2021-05-05T19:09:50-03:00
 featured: false
 draft: false
 
@@ -17,8 +16,8 @@ draft: false
 # To use, add an image named `featured.jpg/png` to your page's folder.
 # Focal points: Smart, Center, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight.
 image:
-  caption: ''
-  focal_point: ''
+  caption: ""
+  focal_point: ""
   preview_only: false
 
 # Projects (optional).
@@ -27,10 +26,10 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2021-10-19T22:38:13.159123Z'
-publication_types:
-- '5'
-abstract: Um livro open-source sobre estruturas de dados.
-publication: ''
-url_pdf: http://www.araujo.eng.uerj.br/opendata/ods-ptbr-cpp.pdf
 ---
+
+## Instalando a SDL
+Para instalar o pacote de desenvolvimento no ubuntu 20.04 digite:
+```
+sudo apt-get install libsdl2-2.0-0  libsdl2-dev libsdl2-image-2.0-0 libsdl2-image-dev
+```
