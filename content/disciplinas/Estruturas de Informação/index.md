@@ -2,11 +2,11 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: Estruturas de Informação
-summary: "Qui.: 16:10  até 17:50h Sex.: 12:30h até 14:10h"
+summary: "Seg: 8:50  até 12:20h "
 authors: [João Araujo]
 tags: [Programação, Estruturas de Informação]
 categories: []
-date: 2020-09-06T01:46:35-03:00
+date: 2022-02-08T01:46:35-03:00
 
 # Optional external URL for project (replaces project detail page).
 external_link: ""
@@ -72,16 +72,14 @@ pois ele facilita a comunicação, enviando alertas quando alguma tarefa for pos
 
 ## Horário
 
-- {{< icon name="clock" pack="far" >}} Quintas-feiras: T5T6 (16:10-17:50h)
-- {{< icon name="clock" pack="far" >}} Sextas-feiras: T1T2 (12:30-14:10h)
+- {{< icon name="clock" pack="far" >}} Segundas-feiras: T3T6 (8:50-12:20h)
 
 ## Avaliação
-  - Duas provas P<sub>1</sub> e P<sub>2</sub> (peso 7)
-  - Um Trabalho T (peso 2)
-  - N Listas de Exercícios: L<sub>1</sub>,L<sub>2</sub>...,L<sub>n</sub> (peso 1)
+  - Duas provas P<sub>1</sub> e P<sub>2</sub> (peso 8)
+  - N Listas de Exercícios: L<sub>1</sub>,L<sub>2</sub>...,L<sub>n</sub> (peso 2)
 
 ### Cálculo da Nota
-$$Média= {0.7*\frac{1}{2}\sum_{n=1}^{2}{P_n}}+0.2*T+0.1*\frac{1}{N}\sum_{n=1}^{N}{L_n}$$
+$$Média= {0.8*\frac{1}{2}\sum_{n=1}^{2}{P_n}}+0.2*\frac{1}{N}\sum_{n=1}^{N}{L_n}$$
 
 $$Média \ge 7 \implies aprovado$$
 $$Média \lt 7 \implies Prova Final$$

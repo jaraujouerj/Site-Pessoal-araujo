@@ -2,11 +2,11 @@
 # Documentation: https://sourcethemes.com/academic/docs/managing-content/
 
 title: "Laboratório de Programação"
-summary: "Qui.: 8:50 até 12:20h "
+summary: "Ter.: 8:50 até 12:20h "
 authors: []
 tags: []
 categories: []
-date: 2020-09-07T17:24:01-03:00
+date: 2022-02-08T17:24:01-03:00
 
 # Optional external URL for project (replaces project detail page).
 external_link: "labprog/"
@@ -39,4 +39,4 @@ url_video: ""
 #   Otherwise, set `slides = ""`.
 slides: ""
 ---
-Qui.: 8:50-12:30h
+Ter.: 8:50-12:20h
