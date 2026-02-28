@@ -30,6 +30,10 @@ subtitle:
 Você pode comprar meu livro na LTC com o cupom de desconto: EAU-RIBEIRO25.
 {{< cite page="/publication/ribeiro-2019" view="2" >}}
 
+## Traduções e Revisões Técnicas
+
+{{< cite page="/publication/cormen-2024" view="2" >}}
+
 ## Livros Gratuitos
 
 Este é um livro sobre ponteiros em C em português do Brasil. A obra original é o livro "_A Tutorial on Pointers and Arrays in C_", de **Ted Jensen**. Resolvi traduzi-lo e no processo também atualizá-lo, então este não é um simples trabalho de tradução, mas também de atualização para a versão de C11, posto que a última versão do livro tem quase 20 anos e a linguagem C teve algumas modificações neste período.
