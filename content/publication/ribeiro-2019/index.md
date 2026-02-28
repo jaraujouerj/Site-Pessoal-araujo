@@ -62,7 +62,7 @@ links:
 - icon_pack: fa
   icon: wallet
   name: comprar
-  url: https://www.grupogen.com.br/introducao-a-programacao-e-aos-algoritmos
+  url: https://amzn.to/4aY4eBW
 
 - icon_pack: fa
   icon: book-open

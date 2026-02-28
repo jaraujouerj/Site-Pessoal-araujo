@@ -37,7 +37,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.amazon.com.br/dp/B073DPCW8B/ref=dp-kindle-redirect?_encoding=UTF8&btkr=1
+    url: https://amzn.to/4r5JiyK
 
   - icon_pack: fa
     icon: book-open

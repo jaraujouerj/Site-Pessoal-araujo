@@ -40,7 +40,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.grupogen.com.br/algoritmos-teoria-e-pratica
+    url: https://amzn.to/4tWCarj
 ---
 
 ## Sobre o livro

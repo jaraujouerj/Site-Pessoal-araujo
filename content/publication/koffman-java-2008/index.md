@@ -36,7 +36,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.livrariaitagyba.com.br/livro-objetos-abstracao-estrutura-de-dados-e-projetos-usando-java-50-9788521616030,ko3518.html
+    url: https://amzn.to/4aMFmN6
 
   - icon_pack: fa
     icon: book-open

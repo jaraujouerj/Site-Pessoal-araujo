@@ -37,7 +37,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.grupogen.com.br/linguagem-c
+    url: https://amzn.to/40Came6
 
   - icon_pack: fa
     icon: book-open

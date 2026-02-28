@@ -38,7 +38,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.saraiva.com.br/introducao-a-programacao-para-engenharia-resolvendo-problemas-com-algoritmos-191680/p
+    url: https://amzn.to/46S9PbN
 
 
   - icon_pack: fa
