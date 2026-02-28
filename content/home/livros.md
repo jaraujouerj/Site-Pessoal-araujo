@@ -47,6 +47,6 @@ Matheus Caldeira Matias e Pedro Yuri dos Reis de Moraes Lopes.
 
 Se você encontrar algum erro nas traduções abaixo, por favor, entre em contato comigo, relatando o erro para que eu possa corrigir
 em novas versões. [Contato](#contact).
-{{< cite page="/publication/pat-2020-odspython" view="2" >}}
-{{< cite page="/publication/pat-2020-odscpp" view="2" >}}
-{{< cite page="/publication/pat-2020-odsjava" view="2" >}}
+- {{< icon name="terminal" pack="fas" >}} [**Estruturas de Dados Abertas (em Pseudocódigo)**](/publication/eda_python/) — versão independente de linguagem
+- {{< icon name="contao" pack="fab" >}} [**Estruturas de Dados Abertas (em C++)**](/publication/eda_cpp/) — com exemplos completos em C++
+- {{< icon name="java" pack="fab" >}} [**Estruturas de Dados Abertas (em Java)**](/publication/eda_java/) — com exemplos completos em Java
