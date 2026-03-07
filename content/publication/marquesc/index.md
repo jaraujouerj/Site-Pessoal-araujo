@@ -38,7 +38,7 @@ links:
   - icon_pack: fa
     icon: wallet
     name: comprar
-    url: https://www.amazon.com.br/C-2-0-Marques/dp/8521615574
+    url: https://amzn.to/4u1CPre
 
   - icon_pack: fa
     icon: book-open
