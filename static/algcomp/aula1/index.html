@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Algoritmos Computacionais I - Aula 1</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: { 'fade-in': 'fadeIn 0.5s ease-out' },
+          keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState } = React;
+
+    // --- Ícones SVG como componentes React ---
+    const SvgIcon = ({ children, className = "w-6 h-6" }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+        className={className}>{children}</svg>
+    );
+    const BrainCircuit = ({ className }) => <SvgIcon className={className}><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" /><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" /><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" /><path d="M17.599 6.5a3 3 0 0 0 .399-1.375" /><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5" /><path d="M3.477 10.896a4 4 0 0 1 .585-.396" /><path d="M19.938 10.5a4 4 0 0 1 .585.396" /><path d="M6 18a4 4 0 0 1-1.967-.516" /><path d="M19.967 17.484A4 4 0 0 1 18 18" /></SvgIcon>;
+    const TerminalSquare = ({ className }) => <SvgIcon className={className}><rect width="18" height="18" x="3" y="3" rx="2" /><path d="m7 11 2-2-2-2" /><line x1="11" x2="15" y1="13" y2="13" /></SvgIcon>;
+    const Layers = ({ className }) => <SvgIcon className={className}><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" /><path d="m2.6 10.18 8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9" /><path d="m2.6 14.18 8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9" /></SvgIcon>;
+    const Cpu = ({ className }) => <SvgIcon className={className}><rect width="16" height="16" x="4" y="4" rx="2" /><rect width="6" height="6" x="9" y="9" rx="1" /><path d="M15 2v2" /><path d="M15 20v2" /><path d="M2 15h2" /><path d="M2 9h2" /><path d="M20 15h2" /><path d="M20 9h2" /><path d="M9 2v2" /><path d="M9 20v2" /></SvgIcon>;
+    const CheckCircle2 = ({ className }) => <SvgIcon className={className}><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></SvgIcon>;
+    const XCircle = ({ className }) => <SvgIcon className={className}><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></SvgIcon>;
+    const PlayCircle = ({ className }) => <SvgIcon className={className}><circle cx="12" cy="12" r="10" /><polygon points="10 8 16 12 10 16 10 8" /></SvgIcon>;
+    const ArrowRight = ({ className }) => <SvgIcon className={className}><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></SvgIcon>;
+    const Play = ({ className }) => <SvgIcon className={className}><polygon points="6 3 20 12 6 21 6 3" /></SvgIcon>;
+    const RotateCcw = ({ className }) => <SvgIcon className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></SvgIcon>;
+    const BookOpen = ({ className }) => <SvgIcon className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></SvgIcon>;
+    const Quote = ({ className }) => <SvgIcon className={className}><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z" /><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z" /></SvgIcon>;
+    const FileText = ({ className }) => <SvgIcon className={className}><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="M10 9H8" /><path d="M16 13H8" /><path d="M16 17H8" /></SvgIcon>;
+
+    function App() {
+      const [activeTab, setActiveTab] = useState('intro');
+
+      return (
+        <div className="min-h-screen bg-slate-900 text-slate-100 font-sans selection:bg-blue-500/30">
+          <nav className="sticky top-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-700 p-4">
+            <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2 text-blue-400 font-bold text-xl">
+                <Cpu className="w-6 h-6" />
+                <span>Engenharia & Computação</span>
+              </div>
+              <div className="flex gap-2 flex-wrap justify-center">
+                <TabButton active={activeTab === 'intro'} onClick={() => setActiveTab('intro')}>Visão Geral</TabButton>
+                <TabButton active={activeTab === 'prefacio'} onClick={() => setActiveTab('prefacio')}>Prefácio do Livro</TabButton>
+                <TabButton active={activeTab === 'metodo'} onClick={() => setActiveTab('metodo')}>O Método</TabButton>
+                <TabButton active={activeTab === 'lab'} onClick={() => setActiveTab('lab')}>Laboratório Lógico</TabButton>
+              </div>
+            </div>
+          </nav>
+
+          <main className="max-w-5xl mx-auto p-4 py-8">
+            {activeTab === 'intro' && <IntroSection onNext={() => setActiveTab('prefacio')} />}
+            {activeTab === 'prefacio' && <PrefaceSection onNext={() => setActiveTab('metodo')} />}
+            {activeTab === 'metodo' && <MethodSection onNext={() => setActiveTab('lab')} />}
+            {activeTab === 'lab' && <InteractiveLab />}
+          </main>
+
+          <footer className="border-t border-slate-800 mt-16 py-8 text-center text-slate-500 text-sm">
+            <p>Desenvolvido para estudantes de 1º ano de Engenharia.</p>
+            <p>Baseado em "Introdução à Programação e aos Algoritmos" e princípios de Design Instrucional.</p>
+          </footer>
+        </div>
+      );
+    }
+
+    // --- Componentes de UI ---
+
+    const TabButton = ({ active, children, onClick }) => (
+      <button onClick={onClick} className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${active
+        ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}>
+        {children}
+      </button>
+    );
+
+    // --- Seção 1: Introdução ---
+
+    const IntroSection = ({ onNext }) => (
+      <div className="space-y-12 animate-fade-in">
+        <header className="text-center space-y-6 py-12">
+          <div className="inline-flex items-center justify-center p-3 bg-blue-500/10 text-blue-400 rounded-2xl mb-4">
+            <BrainCircuit className="w-12 h-12" />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+            Programar não é sobre código.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+              É sobre aprender a pensar.
+            </span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg text-slate-400">
+            "Todo mundo deveria aprender a programar um computador, porque isso ensina a pensar." — Steve Jobs
+          </p>
+        </header>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-xl">
+            <div className="flex items-center gap-3 mb-4 text-red-400">
+              <XCircle className="w-6 h-6" />
+              <h2 className="text-xl font-bold text-slate-100">O Grande Mito</h2>
+            </div>
+            <p className="text-slate-300 leading-relaxed">
+              Muitos alunos de engenharia acreditam que programar é apenas memorizar comandos de uma linguagem (como Python ou
+              C). Conhecer a sintaxe não faz de você um programador, assim como conhecer palavras em português não faz de você um
+              poeta.
+            </p>
+          </div>
+
+          <div className="bg-slate-800 border border-blue-500/30 p-8 rounded-2xl shadow-xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -z-10"></div>
+            <div className="flex items-center gap-3 mb-4 text-green-400">
+              <CheckCircle2 className="w-6 h-6" />
+              <h2 className="text-xl font-bold text-slate-100">A Realidade (A Arte Liberal)</h2>
+            </div>
+            <p className="text-slate-300 leading-relaxed">
+              Para o engenheiro, a computação atua quase como uma "Arte Liberal". Ela traz <strong>disciplina para a
+                mente</strong>. Programar é a arte de pegar um problema complexo de engenharia, dividi-lo em partes menores, e
+              organizar a informação <em>antes</em> de buscar a solução.
+            </p>
+          </div>
+
+          <a href="https://www.youtube.com/watch?v=emxiV9RzG4s" target="_blank" rel="noopener noreferrer"
+            className="bg-slate-800 border border-purple-500/30 p-8 rounded-2xl shadow-xl relative overflow-hidden hover:scale-105 transition-transform no-underline block">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -z-10"></div>
+            <div className="flex items-center gap-3 mb-4 text-purple-400">
+              <PlayCircle className="w-6 h-6" />
+              <h2 className="text-xl font-bold text-slate-100">Por que Programar Ensina a Pensar?</h2>
+            </div>
+            <p className="text-slate-300 leading-relaxed">
+              Assista ao vídeo e descubra como a programação desenvolve o raciocínio lógico e a capacidade de resolver problemas complexos de forma estruturada.
+            </p>
+          </a>
+        </div>
+
+
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={onNext}
+            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105"
+          >
+            Ler o Prefácio
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+    );
+
+    // --- Seção 1.5: Prefácio ---
+
+    const PrefaceSection = ({ onNext }) => (
+      <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
+        <header className="text-center space-y-4 mb-12">
+          <div className="inline-flex items-center justify-center p-3 bg-slate-800 text-slate-300 rounded-2xl mb-4 border border-slate-700">
+            <BookOpen className="w-8 h-8" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold">Por que Programar Ensina a Pensar?</h2>
+          <p className="text-blue-400 font-medium text-lg">Prefácio — Introdução à Programação e aos Algoritmos</p>
+        </header>
+
+        <div className="bg-slate-800 border border-slate-700 p-8 md:p-12 rounded-2xl shadow-xl relative text-lg text-slate-300 leading-relaxed space-y-6">
+          <Quote className="absolute top-6 left-6 w-12 h-12 text-slate-700 opacity-50" />
+
+          <p className="relative z-10 indent-8">
+            “<i>Vivemos em uma sociedade intensamente dependente da ciência e da tecnologia, em que quase ninguém sabe algo sobre ciência e tecnologia.</i>” Carl Sagan, astrônomo
+          </p>
+
+          <p className="indent-8">
+            A frase acima foi dita pelo famoso astrônomo Carl Sagan (1934-1996) em uma de suas últimas entrevistas. Podemos perceber que essa afirmação se torna cada vez mais verdadeira nos tempos atuais, quando sentimos a tecnologia nos engolir desde o momento em que acordamos. Você pode ignorar todos os detalhes tecnológicos que permeiam sua vida e viver feliz na sua ignorância, mas esta atitude tem riscos. Outros vão saber como controlar essa tecnologia, e se você não tiver um conhecimento mínimo sobre ela, ficará alijado de decisões que afetarão o seu dia a dia. Será um usuário, simplesmente, e o mundo funcionará sem que você compreenda como nem por quê. Este curso procura preencher a lacuna de conhecimento sobre uma tecnologia que nos absorve cada vez mais: os computadores.
+          </p>
+
+          <p className="indent-8">
+            Pode parecer estranho, mas é a verdade. Conheço muita gente que conhece a linguagem (a sintaxe), mas não sabe programar, porque programar não é simplesmente inserir código no computador. Programar é toda uma forma de pensar.
+          </p>
+
+          <p className="indent-8">
+            Diversos aparelhos do seu dia a dia usam computadores. Alguns vão usar versões simplificadas dessas máquinas, mas mesmo assim serão computadores. Seu despertador, por exemplo, se não for mecânico, possui um nível básico de computação que permite que seja programado para despertá-lo na hora certa. Se você usa um smartphone, este possui mais poder computacional que os computadores que levaram o homem à Lua em 1969. Hoje em dia, qualquer aparelho doméstico, por mais simples que seja, pode possuir um minúsculo exemplo de computador. Carro, torradeira, geladeira, fogão, televisão e o que você possa imaginar são exemplos de tecnologia computacional.
+          </p>
+
+          <p className="indent-8">
+            Mas como tudo isso funciona? Qual a mágica, se é que existe mágica, que permite que esses aparelhos executem suas tarefas de maneira aparentemente inteligente? Como são programados para atender às nossas necessidades? Neste curso tento responder essas e muitas outras perguntas, além de mostrar a evolução dos sistemas computacionais e como chegamos aqui.
+          </p>
+
+          <p className="indent-8">
+            Pensei o curso como uma introdução à programação, voltado para qualquer um que tenha curiosidade sobre essa matéria, mas com especial atenção ao currículo do primeiro ano dos cursos universitários da área tecnológica. O objetivo é que, ao final, o aluno seja capaz de criar programas adequados à sua área de atuação, seja Engenharia, Informática, Matemática etc. Mas se você for de Biologia, Medicina, Letras; tiver um conhecimento básico de Matemática e for capaz de pensar logicamente, este curso também poderá ensinar muita coisa a você.
+          </p>
+
+          <p className="indent-8">
+            O curso é baseado em um livro que escrevi, chamado "Introdução à Programação e aos Algoritmos", publicado pela Editora LTC. Ele é o resultado de anos de experiência ensinando programação para alunos de Engenharia, e tem como objetivo ser uma introdução clara, acessível e prática ao pensamento computacional. Ele cobre os fundamentos da programação, algoritmos, estruturas de dados e muito mais, sempre com exemplos voltados para a engenharia. O curso seguirá a estrutura do livro, mas também incluirá exercícios práticos, projetos e discussões para aprofundar o entendimento dos conceitos.
+          </p>
+
+          <p className="indent-8">
+            O curso inicia com uma rápida introdução aos conceitos básicos sobre computadores, e apresenta ao leitor um conhecimento mínimo indispensável para que ele compreenda como essas máquinas funcionam internamente. Você pode pular este capítulo, mas não aconselho. Uma base sólida permite aprender mais rapidamente, e este capítulo é exatamente isso: uma base, um alicerce para construir algo mais robusto e estável.
+          </p>
+
+          <p className="indent-8">
+            Depois passo para os conceitos de algoritmos e programação. Neste ponto muitos autores optam por criar uma linguagem algorítmica, próxima ao português, para poder desenvolver esses conceitos. Nunca gostei deste enfoque. Prefiro usar uma linguagem de programação real, que possa ser usada em computadores reais. Os algoritmos não serão abandonados. São muito úteis e é mesmo essencial pensar antes um algoritmo para depois passar para a linguagem de programação, porém, sempre que possível apresentarei o algoritmo e sua versão em uma linguagem de programação efetiva, para que o leitor possa escrever o programa em um computador real e ver o resultado.
+          </p>
+
+          <p className="indent-8">
+            Programar se aprende com a prática. Uma interessante analogia que podemos fazer é entre a programação de computadores e a culinária.
+          </p>
+
+          <p className="indent-8">
+            Imagine que você queira se tornar um cozinheiro. Você ainda não sabe nada sobre cozinha, mas tem esse forte desejo. Quais são seus objetivos? Se quer apenas preparar um almoço de fim de semana para sua família, você pode pegar uma receita de um prato que todos gostem e tentar replicar os passos. Por mais detalhadas que sejam as instruções da receita, alguns detalhes podem depender de sua experiência na cozinha, e você, por enquanto, não tem nenhuma. Para se tornar um bom cozinheiro você deve entender as bases da cozinha, sua teoria, como os alimentos podem ser combinados etc.
+          </p>
+
+          <p className="indent-8">
+            Aprender a cozinhar exige uma mistura de prática com teoria. Não adianta estudar centenas de livros de culinária se você não vai para a cozinha testar esses conhecimentos. Não se pode ser um cozinheiro teórico. Cozinhar exige prática. Também não adianta ir para a cozinha sem nenhum conhecimento prévio. Você pode até se tornar um grande cozinheiro, mas vai levar muito tempo para descobrir por tentativa e erro algumas coisas que outros já sabem há séculos. Isaac Newton dizia que pôde ver mais longe porque estava montado em ombros de gigantes. Devemos, portanto, aproveitar o conhecimento prévio para podermos avançar mais longe e mais rápido.
+          </p>
+
+          <p className="indent-8">
+            Programar funciona da mesma maneira. Não adianta ler livros de teoria, estudar programas escritos por outros, se você não põe a mão na massa, ou seja, se você não programa.
+          </p>
+
+          <p className="indent-8">
+            A vantagem de programar para aprender é ter um feedback instantâneo. Você pode ver o erro e aprender com o erro, assim que acabar de escrever o seu programa.
+          </p>
+
+          <p className="indent-8">
+            Para programar um computador você precisa aprender uma linguagem de programação. Sim, o computador tem sua própria linguagem. Você não pode programar em português. Mas, para nossa felicidade, as linguagens de programação são bem simples, com poucas palavras e uma sintaxe restrita. Diversas linguagens se prestam ao primeiro contato com a programação. Uma característica desejável é que seja de simples aprendizado, com uma sintaxe simples, porém eficiente.
+          </p>
+
+          <p className="indent-8">
+            Assim, considero que a linguagem mais adequada para um primeiro contato com os algoritmos e a programação seja a linguagem Python.
+          </p>
+
+          <p className="indent-8">
+            Python é uma linguagem simples e de fácil aprendizado, mesmo para iniciantes na programação de computadores. Portanto, usarei o básico de Python, sem entrar em detalhes de sintaxe, que poderiam desviar o foco do aprendizado de conceitos de programação. Assim, os programas serão de simples entendimento, mesmo para aqueles que nunca viram um programa antes, bastando um conhecimento básico do inglês, pois Python, como quase todas as linguagens de programação, é baseado na língua inglesa.
+          </p>
+
+          <p className="indent-8">
+            Espero que este curso seja o início de uma jornada fascinante no mundo da computação, e que ele ajude a desmistificar a ideia de que programar é algo inacessível ou reservado apenas para especialistas. Com dedicação e prática, qualquer um pode aprender a programar e, mais importante, aprender a pensar como um programador.
+          </p>
+
+          <div className="mt-8 pt-6 border-t border-slate-700 flex items-center justify-between text-sm text-slate-500">
+            <span className="font-semibold text-slate-400">— João Araújo Ribeiro</span>
+            <span className="flex items-center gap-2"><FileText className="w-4 h-4" /> Baseado na transcrição do autor</span>
+          </div>
+        </div>
+
+        <div className="flex justify-center pt-8">
+          <button
+            onClick={onNext}
+            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105"
+          >
+            Avançar para O Método
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+    );
+
+    // --- Seção 2: O Método ---
+
+    const MethodSection = ({ onNext }) => (
+      <div className="space-y-12 animate-fade-in">
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold">A Forma Correta de Aprender</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Segundo o plano de ensino e a literatura base, o segredo não está em pular direto para o teclado. O pensamento
+            algorítmico exige <strong>refinamentos sucessivos</strong>.
+          </p>
+        </div>
+
+        <div className="relative">
+          <div className="hidden md:block absolute top-1/2 left-8 right-8 h-1 bg-slate-800 -translate-y-1/2 z-0"></div>
+          <div className="grid md:grid-cols-4 gap-6 relative z-10">
+            <MethodStep number="1" icon={<BrainCircuit className="w-10 h-10" />} title="Entender" desc="Compreenda o problema físico ou matemático sem pensar no computador." />
+            <MethodStep number="2" icon={<Layers className="w-10 h-10" />} title="Dividir" desc="Quebre o problema gigante em subsistemas menores e gerenciáveis." />
+            <MethodStep number="3" icon={<BookOpen className="w-10 h-10" />} title="Algoritmo" desc="Crie uma sequência lógica e não-ambígua de passos (A Lógica)." />
+            <MethodStep number="4" icon={<TerminalSquare className="w-10 h-10" />} title="Codificar" desc="Só agora, traduza a sua lógica para a linguagem (Python, C, etc)." />
+          </div>
+        </div>
+
+        <div className="bg-blue-900/20 border border-blue-800 rounded-xl p-6 text-center max-w-3xl mx-auto">
+          <h3 className="text-blue-400 font-semibold mb-2">Por que isso importa na Engenharia?</h3>
+          <p className="text-sm text-slate-300">
+            Seja calculando a carga de uma ponte ou analisando dados termodinâmicos, se você inserir um código com a lógica
+            errada, o computador executará o erro perfeitamente e rapidamente. <strong>O computador te obedece cegamente; a
+              inteligência deve estar no seu algoritmo.</strong>
+          </p>
+        </div>
+
+        <div className="flex justify-center pt-8">
+          <button onClick={onNext}
+            className="group flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-full font-bold transition-all hover:scale-105">
+            Ir para o Laboratório Lógico
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+      </div>
+    );
+
+    const MethodStep = ({ number, icon, title, desc }) => (
+      <div className="bg-slate-800 border border-slate-700 p-6 rounded-xl relative flex flex-col items-center text-center hover:-translate-y-2 transition-transform duration-300">
+        <div className="w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center absolute -top-4 shadow-lg border-4 border-slate-900">
+          {number}
+        </div>
+        <div className="text-blue-400 mb-4 mt-2">
+          {icon}
+        </div>
+        <h3 className="font-bold text-lg mb-2">{title}</h3>
+        <p className="text-sm text-slate-400">{desc}</p>
+      </div>
+    );
+
+    // --- Seção 3: Interativa (O Jogo do Algoritmo) ---
+
+    const initialBlocks = [
+      { id: 'b', text: "Aplicar a fórmula de tensão (Força / Área)" },
+      { id: 'd', text: "Exibir aviso de 'Risco de Ruptura' ou 'Seguro'" },
+      { id: 'a', text: "Ler os dados de entrada (Força aplicada e Área da seção)" },
+      { id: 'c', text: "Verificar se a tensão calculada é maior que o limite do material" }
+    ];
+
+    const InteractiveLab = () => {
+      const [availableBlocks, setAvailableBlocks] = useState([...initialBlocks].sort(() => Math.random() - 0.5));
+      const [algorithmSequence, setAlgorithmSequence] = useState([]);
+      const [status, setStatus] = useState('idle');
+
+      const handleSelectBlock = (block) => {
+        setAvailableBlocks(availableBlocks.filter(b => b.id !== block.id));
+        setAlgorithmSequence([...algorithmSequence, block]);
+        setStatus('idle');
+      };
+
+      const handleRemoveBlock = (block) => {
+        setAlgorithmSequence(algorithmSequence.filter(b => b.id !== block.id));
+        setAvailableBlocks([...availableBlocks, block]);
+        setStatus('idle');
+      };
+
+      const handleRunAlgorithm = () => {
+        if (algorithmSequence.length !== 4) { setStatus('error'); return; }
+        const currentOrder = algorithmSequence.map(b => b.id).join('');
+        setStatus(currentOrder === 'abcd' ? 'success' : 'error');
+      };
+
+      const reset = () => {
+        setAvailableBlocks([...initialBlocks].sort(() => Math.random() - 0.5));
+        setAlgorithmSequence([]);
+        setStatus('idle');
+      };
+
+      return (
+        <div className="space-y-8 animate-fade-in">
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl font-bold">Laboratório de Lógica Estruturada</h2>
+            <p className="text-slate-400 max-w-2xl mx-auto">
+              Problema: Você precisa criar um programa que avalia se uma viga suporta uma carga.
+              <strong> A sintaxe não importa. A ordem lógica é tudo.</strong> Clique nos blocos para construir seu algoritmo na
+              ordem correta.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-300 flex items-center gap-2">
+                <Layers className="w-5 h-5 text-blue-400" /> Blocos de Ação (Desordenados)
+              </h3>
+              <div className="min-h-[300px] bg-slate-900/50 rounded-xl p-4 border border-slate-700 border-dashed flex flex-col gap-3">
+                {availableBlocks.length === 0 && (
+                  <p className="text-slate-500 text-center italic mt-10">Todos os blocos utilizados.</p>
+                )}
+                {availableBlocks.map(block => (
+                  <button key={block.id} onClick={() => handleSelectBlock(block)}
+                    className="text-left bg-slate-800 hover:bg-blue-900/40 border border-slate-600 hover:border-blue-500 p-3 rounded-lg text-sm transition-all shadow-sm group">
+                    <span className="text-blue-400 font-mono mr-2 opacity-50 group-hover:opacity-100">+</span>
+                    {block.text}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="font-semibold text-slate-300 flex items-center gap-2">
+                <TerminalSquare className="w-5 h-5 text-green-400" /> Seu Algoritmo (Ordem de Execução)
+              </h3>
+              <div className="min-h-[300px] bg-slate-950 rounded-xl p-4 border border-slate-700 shadow-inner flex flex-col gap-3 relative">
+                {algorithmSequence.length === 0 && (
+                  <p className="text-slate-600 text-center italic mt-10">Clique nos blocos ao lado para montar a sequência.</p>
+                )}
+                {algorithmSequence.map((block, index) => (
+                  <div key={block.id} onClick={() => handleRemoveBlock(block)}
+                    className="text-left bg-slate-800 border-l-4 border-blue-500 p-3 rounded-r-lg text-sm cursor-pointer hover:bg-red-900/20 hover:border-red-500 transition-all flex items-center"
+                    title="Clique para remover">
+                    <span className="text-slate-500 font-mono w-6">{index + 1}.</span>
+                    <span className="flex-1">{block.text}</span>
+                    <XCircle className="w-4 h-4 text-slate-500 hover:text-red-400" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex gap-4">
+              <button onClick={reset}
+                className="flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-slate-300 bg-slate-800 hover:bg-slate-700 transition-colors border border-slate-700">
+                <RotateCcw className="w-4 h-4" /> Resetar
+              </button>
+              <button onClick={handleRunAlgorithm} disabled={algorithmSequence.length === 0}
+                className="flex items-center gap-2 px-8 py-3 rounded-lg font-bold text-white bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-green-900/20">
+                <Play className="w-4 h-4" /> Executar Algoritmo
+              </button>
+            </div>
+
+            {status === 'success' && (
+              <div className="animate-fade-in bg-green-900/30 border border-green-500/50 p-6 rounded-xl max-w-2xl text-center">
+                <div className="flex justify-center mb-3">
+                  <CheckCircle2 className="w-10 h-10 text-green-400" />
+                </div>
+                <h4 className="text-lg font-bold text-green-400 mb-2">Compilação Lógica Bem-sucedida!</h4>
+                <p className="text-slate-300 text-sm">
+                  Perfeito! Você pensou como um engenheiro de software. Entrada de dados → Processamento (Cálculo) → Decisão
+                  Lógica → Saída de Dados. Esta é a essência dos <strong>passos não ambíguos</strong> ensinados na Aula 04.
+                </p>
+              </div>
+            )}
+
+            {status === 'error' && (
+              <div className="animate-fade-in bg-red-900/30 border border-red-500/50 p-6 rounded-xl max-w-2xl text-center">
+                <div className="flex justify-center mb-3">
+                  <XCircle className="w-10 h-10 text-red-400" />
+                </div>
+                <h4 className="text-lg font-bold text-red-400 mb-2">Erro de Lógica Estrutural</h4>
+                <p className="text-slate-300 text-sm">
+                  {algorithmSequence.length < 4
+                    ? "O algoritmo está incompleto. Faltam passos essenciais."
+                    : "A ordem está incorreta. Pense logicamente: você pode calcular a tensão antes de ler os dados? Você pode tomar uma decisão antes de calcular? Tente novamente."}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    // --- Renderizar a aplicação ---
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
