@@ -50,11 +50,11 @@ Introdução a algoritmos e lógica de programação. Tipos de dados básicos. E
 <tr><th>n&ordm;</th><th>Conteúdo Programático</th><th>Referência</th></tr>
 </thead>
 <tbody>
-<tr><td><a href="/algcomp/aula1">01</a></td>
-<td><b>Apresentação do Curso:</b> expectativas, Avaliação Prefácio e Plano de Ensino. Importância do pensamento lógico. O que é algoritmo.</td><td>Prefácio e Plano de Ensino</td></tr>
+<tr><td>01</td>
+<td><a href="/algcomp/aula1"><b>Apresentação do Curso:</b></a> expectativas, Avaliação Prefácio e Plano de Ensino. Importância do pensamento lógico. O que é algoritmo.</td><td>Prefácio e Plano de Ensino</td></tr>
 <tr>
 <td>02</td>
-<td><b>Como o computador representa informação:</b>Decimal e Binário (bit/byte), Prefixos kilo, mega, giga, tera, peta.<br>
+<td><a href="/algcomp/aula02"><b>Como o computador representa informação:</b></a>Decimal e Binário (bit/byte), Prefixos kilo, mega, giga, tera, peta.<br>
 <b>Bases Avançadas:</b> Hexadecimal, Octal e o padrão Kibi/Kilo.<br>
 <b>Representação de Dados:</b> caracteres (ASCII/Unicode).<br>
 <b>Questionário:</b> números sinalizados (Complemento a 2) e ponto flutuante (para casa)<br>

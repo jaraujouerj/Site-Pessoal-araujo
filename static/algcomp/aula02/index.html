@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 02 - Representação da Informação</title>
+
+    <!-- Importando o Tailwind CSS para o design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Importando o React e o ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+
+    <!-- Importando o Babel para compilar o código React no navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Estilos customizados -->
+    <style>
+        body {
+            background-color: #0f172a;
+            /* slate-900 */
+            color: #f1f5f9;
+            /* slate-100 */
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #0891b2;
+            /* cyan-600 */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #06b6d4;
+            /* cyan-500 */
+            transform: scale(1.05);
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- Ícones inline ---
+        const Icons = {
+            Binary: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="14" y="14" width="4" height="6" rx="2" /><rect x="6" y="4" width="4" height="6" rx="2" /><path d="M6 20h4" /><path d="M14 4h4" /><path d="M6 14h2v6" /><path d="M14 4h2v6" /></svg>,
+            Zap: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>,
+            Layers: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polygon points="12 2 2 7 12 12 22 7 12 2" /><polyline points="2 17 12 22 22 17" /><polyline points="2 12 12 17 22 12" /></svg>,
+            Database: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" /><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" /></svg>,
+            Calculator: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="16" y1="14" x2="16" y2="18" /><path d="M16 10h.01" /><path d="M12 10h.01" /><path d="M8 10h.01" /><path d="M12 14h.01" /><path d="M8 14h.01" /><path d="M12 18h.01" /><path d="M8 18h.01" /></svg>,
+            ArrowRight: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>,
+            Lightbulb: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.2 1.5 1.5 2.5" /><path d="M9 18h6" /><path d="M10 22h4" /></svg>,
+            Sparkles: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" /><path d="M5 3v4" /><path d="M3 5h4" /><path d="M19 19v4" /><path d="M17 21h4" /></svg>,
+            Loader2: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 12a9 9 0 1 1-6.219-8.56" /></svg>,
+            Youtube: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" /><path d="m10 15 5-3-5-3z" /></svg>,
+            Key: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4" /><path d="m21 2-9.6 9.6" /><circle cx="7.5" cy="15.5" r="5.5" /></svg>,
+            BookOpen: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>,
+            ChevronDown: (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><polyline points="6 9 12 15 18 9" /></svg>
+        };
+
+        // --- Configuração da API do Gemini ---
+        const callGeminiAPI = async (prompt, userApiKey) => {
+            if (!userApiKey) {
+                return "Aviso: A chave da API do Gemini não foi configurada.";
+            }
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${userApiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+
+            const delays = [1000, 2000, 4000, 8000];
+
+            for (let i = 0; i <= delays.length; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 400 || response.status === 403) {
+                            return "Erro: Chave da API inválida. Por favor, verifique a chave configurada clicando no ícone de chave no menu.";
+                        }
+                        throw new Error('Erro na API');
+                    }
+
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Resposta vazia da IA.";
+                } catch (error) {
+                    if (i === delays.length) {
+                        return "Erro ao conectar com a IA. Por favor, tente novamente mais tarde.";
+                    }
+                    await new Promise(resolve => setTimeout(resolve, delays[i]));
+                }
+            }
+        };
+
+        // --- Componentes ---
+        const TabButton = ({ active, children, onClick }) => (
+            <button
+                onClick={onClick}
+                className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all flex items-center ${active
+                        ? 'bg-cyan-600/20 text-cyan-400 border border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        : 'bg-slate-800 text-slate-400 border border-transparent hover:bg-slate-700 hover:text-slate-200'
+                    }`}
+            >
+                {children}
+            </button>
+        );
+
+        const ApiKeyModal = ({ onClose, onSave, currentKey }) => {
+            const [inputKey, setInputKey] = useState(currentKey);
+
+            return (
+                <div className="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4 animate-fade-in">
+                    <div className="bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-6">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-xl font-bold text-slate-100 flex items-center gap-2">
+                                <Icons.Key className="w-6 h-6 text-cyan-400" />
+                                Configurar Tutor IA
+                            </h3>
+                            <button onClick={onClose} className="text-slate-400 hover:text-slate-200">✕</button>
+                        </div>
+
+                        <div className="space-y-4 text-sm text-slate-300">
+                            <p>
+                                Para usar as explicações mágicas geradas por Inteligência Artificial (Google Gemini) nesta aula, você precisa informar uma chave de acesso gratuita.
+                            </p>
+                            <ol className="list-decimal list-inside space-y-2 text-slate-400 bg-slate-900/50 p-4 rounded-lg">
+                                <li>Acesse o <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline font-bold">Google AI Studio</a>.</li>
+                                <li>Faça login com sua conta Google.</li>
+                                <li>Clique no botão azul <strong>"Create API key"</strong>.</li>
+                                <li>Copie a chave gerada e cole no campo abaixo:</li>
+                            </ol>
+
+                            <input
+                                type="password"
+                                value={inputKey}
+                                onChange={(e) => setInputKey(e.target.value)}
+                                placeholder="Cole sua chave AIzaSy..."
+                                className="w-full bg-slate-900 border border-slate-600 rounded-lg px-4 py-3 text-slate-100 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-mono text-sm"
+                            />
+                            <p className="text-xs text-slate-500 text-center">
+                                🔒 Sua chave fica salva <b>apenas no seu navegador</b> e não é enviada para nenhum outro lugar.
+                            </p>
+                        </div>
+
+                        <div className="flex justify-end gap-3 pt-4 border-t border-slate-700">
+                            <button onClick={onClose} className="px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-700 transition-colors">
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={() => onSave(inputKey)}
+                                className="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold transition-colors shadow-lg shadow-cyan-600/20"
+                            >
+                                Salvar Chave
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DecimalVsBinarySection = ({ onNext }) => (
+            <div className="space-y-12 animate-fade-in">
+                <header className="text-center space-y-6 py-8">
+                    <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight">
+                        A Biologia contra a <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Física</span>
+                    </h1>
+                    <p className="max-w-3xl mx-auto text-lg text-slate-400 leading-relaxed">
+                        Nós humanos contamos usando a Base 10 (Decimal). Por que os computadores usam a Base 2 (Binário)?
+                        Como engenheiro, você precisa entender que a computação não é mágica; ela é baseada em eletricidade.
+                    </p>
+                </header>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                    <div className="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="p-3 bg-amber-500/20 rounded-lg text-amber-400">
+                                <span className="text-2xl font-bold">10</span>
+                            </div>
+                            <h2 className="text-2xl font-bold text-slate-100">Sistema Decimal</h2>
+                        </div>
+                        <ul className="space-y-4 text-slate-300">
+                            <li className="flex items-start gap-3">
+                                <span className="text-amber-400 mt-1">●</span>
+                                <span><strong>Motivação Biológica:</strong> Temos 10 dedos nas mãos. Foi natural para a humanidade desenvolver um sistema com 10 símbolos.</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-amber-400 mt-1">●</span>
+                                <span><strong>Símbolos:</strong> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9.</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-amber-400 mt-1">●</span>
+                                <span><strong>Engenharia:</strong> Tentar criar um componente eletrônico que reconheça 10 níveis exatos de voltagem (ex: 0V a 9V) é caro e propenso a falhas.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="bg-cyan-950/20 border border-cyan-900/50 p-8 rounded-2xl relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-8 opacity-10">
+                            <Icons.Zap className="w-32 h-32 text-cyan-400" />
+                        </div>
+                        <div className="flex items-center gap-3 mb-6 relative z-10">
+                            <div className="p-3 bg-cyan-500/20 rounded-lg text-cyan-400">
+                                <span className="text-2xl font-bold">01</span>
+                            </div>
+                            <h2 className="text-2xl font-bold text-slate-100">Sistema Binário</h2>
+                        </div>
+                        <ul className="space-y-4 text-slate-300 relative z-10">
+                            <li className="flex items-start gap-3">
+                                <span className="text-cyan-400 mt-1">●</span>
+                                <span><strong>Motivação Física (Hardware):</strong> Computadores são feitos de bilhões de transistores operando como chaves eletrônicas.</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-cyan-400 mt-1">●</span>
+                                <span><strong>Símbolos:</strong> 0 (Ausência de tensão / Desligado) e 1 (Presença de tensão / Ligado).</span>
+                            </li>
+                            <li className="flex items-start gap-3">
+                                <span className="text-cyan-400 mt-1">●</span>
+                                <span><strong>Engenharia:</strong> É extremamente confiável distinguir entre "Tem energia" e "Não tem energia". A margem de erro é segura.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div className="flex justify-center pt-8">
+                    <button onClick={onNext} className="btn-primary group">
+                        Entender Bits e Bytes <Icons.ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                </div>
+            </div>
+        );
+
+        const BitsAndBytesSection = ({ onNext }) => (
+            <div className="space-y-12 animate-fade-in">
+                <div className="text-center space-y-4">
+                    <h2 className="text-3xl font-bold">A Anatomia da Informação</h2>
+                    <p className="text-slate-400 max-w-2xl mx-auto">
+                        Como transformamos meros impulsos elétricos (ligado/desligado) em textos, imagens e cálculos complexos de engenharia? Agrupando-os.
+                    </p>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-12 items-center">
+                    <div className="space-y-8">
+                        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></div>
+                                <h3 className="text-xl font-bold text-cyan-400">O Bit (Binary Digit)</h3>
+                            </div>
+                            <p className="text-slate-300">
+                                É a menor unidade de informação. Um bit só pode assumir dois valores: <strong>0 ou 1</strong>. Isolado, responde apenas "Sim" ou "Não".
+                            </p>
+                        </div>
+
+                        <div className="bg-slate-800 p-6 rounded-xl border border-slate-700">
+                            <div className="flex items-center gap-3 mb-2">
+                                <div className="flex gap-1">
+                                    {[...Array(8)].map((_, i) => (
+                                        <div key={i} className={`w-2 h-4 rounded-sm ${i % 3 === 0 ? 'bg-blue-500' : 'bg-slate-600'}`}></div>
+                                    ))}
+                                </div>
+                                <h3 className="text-xl font-bold text-blue-400">O Byte (8 Bits)</h3>
+                            </div>
+                            <p className="text-slate-300">
+                                Um agrupamento padrão de <strong>8 bits</strong> forma 1 Byte. Com 8 posições, temos 2⁸ = <strong>256 combinações diferentes</strong> (0 a 255).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-slate-900 border border-slate-700 p-8 rounded-2xl shadow-2xl flex flex-col items-center justify-center min-h-[300px]">
+                        <h4 className="text-slate-400 mb-8 font-mono">Estrutura de 1 Byte em Memória</h4>
+                        <div className="flex gap-2">
+                            {['0', '1', '0', '0', '0', '0', '0', '1'].map((bit, idx) => (
+                                <div key={idx} className="flex flex-col items-center gap-2">
+                                    <div className={`w-10 h-14 flex items-center justify-center text-2xl font-bold rounded-md border-b-4 ${bit === '1' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500' : 'bg-slate-800 text-slate-500 border-slate-700'
+                                        }`}>
+                                        {bit}
+                                    </div>
+                                    <span className="text-[10px] text-slate-500 font-mono">Bit {7 - idx}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-8 text-center text-slate-300">
+                            Esse byte <span className="font-mono text-cyan-400 bg-cyan-900/30 px-2 py-1 rounded">01000001</span> representa o número decimal <strong>65</strong>, a letra <strong>'A'</strong> na tabela ASCII.
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-12 max-w-3xl mx-auto">
+                    <div className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden shadow-xl">
+                        <div className="p-4 bg-slate-800/80 border-b border-slate-700 flex items-center gap-3">
+                            <Icons.Youtube className="w-6 h-6 text-red-500 shrink-0" />
+                            <h3 className="text-lg font-bold text-slate-100">Aprofunde-se: Por que 1 byte tem 8 bits?</h3>
+                        </div>
+                        <div className="aspect-video w-full bg-slate-900">
+                            <iframe className="w-full h-full border-none" src="https://www.youtube-nocookie.com/embed/ZSZZtcsGjL4" title="Por que 1 byte tem 8 bits" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex justify-center pt-8">
+                    <button onClick={onNext} className="btn-primary group">
+                        Escalas e Prefixos <Icons.ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                </div>
+            </div>
+        );
+
+        const PrefixesSection = ({ onNext, apiKey, onRequestKey }) => {
+            const [iaText, setIaText] = useState("");
+            const [isGenerating, setIsGenerating] = useState(false);
+
+            const generateAnalogy = async (prefix) => {
+                if (!apiKey) {
+                    onRequestKey();
+                    return;
+                }
+
+                setIsGenerating(true);
+                setIaText("");
+                const prompt = `Como professor de engenharia, crie uma analogia curta e criativa (máximo de 3 frases) explicando o tamanho de 1 ${prefix.name}byte (${prefix.symbol}, 10^${prefix.power} bytes) para um aluno iniciante. Use exemplos concretos do mundo real (engenharia civil, proporções físicas, etc).`;
+                const response = await callGeminiAPI(prompt, apiKey);
+                setIaText(response);
+                setIsGenerating(false);
+            };
+
+            const prefixes = [
+                { name: 'Kilo', symbol: 'KB', bytes: '1.000', power: '10³', desc: 'Um pequeno documento de texto.' },
+                { name: 'Mega', symbol: 'MB', bytes: '1.000.000', power: '10⁶', desc: 'Uma foto em alta resolução ou MP3.' },
+                { name: 'Giga', symbol: 'GB', bytes: '1.000.000.000', power: '10⁹', desc: 'Um filme em Full HD.' },
+                { name: 'Tera', symbol: 'TB', bytes: '1.000.000.000.000', power: '10¹²', desc: 'HD de um computador moderno.' },
+                { name: 'Peta', symbol: 'PB', bytes: '1.000.000.000.000.000', power: '10¹⁵', desc: 'Armazenamento em Data Centers.' },
+            ];
+
+            return (
+                <div className="space-y-12 animate-fade-in">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-3xl font-bold">Prefixos de Grandeza</h2>
+                        <p className="text-slate-400 max-w-2xl mx-auto">
+                            Ao projetar sistemas, os engenheiros lidam com quantidades imensas de bytes. Para facilitar, utilizamos prefixos padronizados.
+                        </p>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-slate-800/80 text-slate-300 border-b border-slate-700">
+                                    <th className="p-4 font-semibold">Prefixo</th>
+                                    <th className="p-4 font-semibold">Símbolo</th>
+                                    <th className="p-4 font-semibold">Base 10</th>
+                                    <th className="p-4 font-semibold">Equivalência</th>
+                                    <th className="p-4 font-semibold">Exemplo Real</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {prefixes.map((pref, idx) => (
+                                    <tr key={idx} className="border-b border-slate-800 hover:bg-slate-800/40 transition-colors">
+                                        <td className="p-4 font-bold text-cyan-400">{pref.name}</td>
+                                        <td className="p-4 text-slate-300">{pref.symbol}</td>
+                                        <td className="p-4 font-mono text-blue-400">{pref.power}</td>
+                                        <td className="p-4 text-slate-400">{pref.bytes} bytes</td>
+                                        <td className="p-4 text-slate-300 flex items-center justify-between">
+                                            <span>{pref.desc}</span>
+                                            <button
+                                                onClick={() => generateAnalogy(pref)}
+                                                disabled={isGenerating}
+                                                className="ml-4 p-2 bg-indigo-600/20 text-indigo-400 hover:bg-indigo-600/40 hover:text-indigo-300 rounded-lg transition-colors border border-indigo-500/30 flex items-center gap-1 text-xs font-semibold shrink-0"
+                                            >
+                                                <Icons.Sparkles className="w-3 h-3" /> ✨ Explicar
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    {(iaText || isGenerating) && (
+                        <div className="bg-indigo-950/40 border border-indigo-500/50 p-6 rounded-xl animate-fade-in relative overflow-hidden">
+                            <div className="absolute top-0 right-0 p-4 opacity-10">
+                                <Icons.Sparkles className="w-24 h-24 text-indigo-400" />
+                            </div>
+                            <h4 className="text-indigo-400 font-bold mb-3 flex items-center gap-2">
+                                <Icons.Sparkles className="w-5 h-5" /> Analogia do Tutor IA
+                            </h4>
+                            {isGenerating ? (
+                                <div className="flex items-center gap-3 text-slate-400">
+                                    <Icons.Loader2 className="w-5 h-5 animate-spin text-indigo-500" />
+                                    <span>Pensando em uma analogia criativa...</span>
+                                </div>
+                            ) : (
+                                <p className="text-slate-300 leading-relaxed relative z-10">{iaText}</p>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="bg-blue-900/20 border-l-4 border-blue-500 p-6 rounded-r-xl">
+                        <h4 className="text-blue-400 font-bold mb-2 flex items-center gap-2">
+                            <Icons.Lightbulb className="w-5 h-5" /> Spoiler da Próxima Aula
+                        </h4>
+                        <p className="text-sm text-slate-300">
+                            O computador calcula em potências de 2. Na verdade, 1 Kilobyte de RAM possui <strong>1024 bytes (2¹⁰)</strong>. O uso de 1000 é para simplificação humana. Veremos isso depois!
+                        </p>
+                    </div>
+
+                    <div className="mt-12 space-y-8">
+                        <h3 className="text-2xl font-bold text-center flex items-center justify-center gap-3">
+                            <Icons.Youtube className="w-8 h-8 text-red-500" /> Videoaulas Complementares
+                        </h3>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                                <div className="p-4 bg-slate-800/80 border-b border-slate-700 grow">
+                                    <h4 className="font-bold text-slate-100 text-sm">A História Secreta dos Prefixos</h4>
+                                </div>
+                                <div className="aspect-video w-full bg-slate-900">
+                                    <iframe className="w-full h-full border-none" src="https://www.youtube-nocookie.com/embed/oHmFEcd6__o" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                </div>
+                            </div>
+                            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                                <div className="p-4 bg-slate-800/80 border-b border-slate-700 grow">
+                                    <h4 className="font-bold text-slate-100 text-sm">1kbit vs 1kByte</h4>
+                                </div>
+                                <div className="aspect-video w-full bg-slate-900">
+                                    <iframe className="w-full h-full border-none" src="https://www.youtube-nocookie.com/embed/rvmQ2YUDNlA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center pt-8">
+                        <button onClick={onNext} className="btn-primary group">
+                            Entrar no Laboratório <Icons.ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const BinaryLab = ({ onNext, apiKey, onRequestKey }) => {
+            const [bits, setBits] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+            const [iaExplanation, setIaExplanation] = useState("");
+            const [isExplaining, setIsExplaining] = useState(false);
+
+            const decimalValue = bits.reduce((acc, bit, idx) => acc + (bit * Math.pow(2, 7 - idx)), 0);
+
+            const toggleBit = (index) => {
+                const newBits = [...bits];
+                newBits[index] = newBits[index] === 0 ? 1 : 0;
+                setBits(newBits);
+                setIaExplanation("");
+            };
+
+            const askIA = async () => {
+                if (!apiKey) {
+                    onRequestKey();
+                    return;
+                }
+                setIsExplaining(true);
+                const prompt = `Como professor, explique de forma breve e divertida o número decimal ${decimalValue} (que em binário de 8 bits é ${bits.join('')}). Há alguma curiosidade sobre este número na computação, tabela ASCII, matemática ou cultura pop? Responda em até 3 frases.`;
+                const response = await callGeminiAPI(prompt, apiKey);
+                setIaExplanation(response);
+                setIsExplaining(false);
+            };
+
+            return (
+                <div className="space-y-8 animate-fade-in">
+                    <div className="text-center space-y-4">
+                        <h2 className="text-3xl font-bold">Laboratório de 8-bits</h2>
+                        <p className="text-slate-400">Clique nos interruptores para ligar (1) ou desligar (0) os bits e veja a conversão.</p>
+                    </div>
+
+                    <div className="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 max-w-4xl mx-auto flex flex-col items-center">
+                        <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
+                            {bits.map((bit, idx) => {
+                                const power = 7 - idx;
+                                const value = Math.pow(2, power);
+                                return (
+                                    <div key={idx} className="flex flex-col items-center gap-3">
+                                        <span className="text-xs font-mono text-slate-500">2<sup>{power}</sup>={value}</span>
+                                        <button
+                                            onClick={() => toggleBit(idx)}
+                                            className={`w-12 h-16 md:w-16 md:h-20 rounded-xl border-b-4 flex items-center justify-center text-2xl font-bold transition-all ${bit === 1
+                                                    ? 'bg-cyan-500 text-white border-cyan-700 shadow-[0_0_15px_rgba(6,182,212,0.5)] -translate-y-1'
+                                                    : 'bg-slate-900 text-slate-600 border-slate-950 hover:bg-slate-700'
+                                                }`}
+                                        >
+                                            {bit}
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                        <div className="flex flex-col items-center p-6 bg-slate-900 rounded-xl border border-slate-700 min-w-[250px]">
+                            <span className="text-slate-400 uppercase tracking-widest text-sm font-bold mb-2">Valor Decimal</span>
+                            <span className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                                {decimalValue}
+                            </span>
+                        </div>
+
+                        <div className="mt-8">
+                            <button
+                                onClick={askIA}
+                                disabled={isExplaining}
+                                className="btn-primary bg-indigo-600 hover:bg-indigo-500 flex items-center gap-2 shadow-lg shadow-indigo-500/20"
+                            >
+                                {isExplaining ? <Icons.Loader2 className="w-5 h-5 animate-spin" /> : <Icons.Sparkles className="w-5 h-5" />}
+                                {isExplaining ? "A analisar o número..." : "Curiosidade sobre este número (IA)"}
+                            </button>
+                        </div>
+
+                        {iaExplanation && !isExplaining && (
+                            <div className="mt-8 w-full bg-indigo-950/40 border border-indigo-500/50 p-6 rounded-xl animate-fade-in text-slate-300 text-center">
+                                {iaExplanation}
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex justify-center pt-8">
+                        <button onClick={onNext} className="btn-primary group">
+                            Testar Conhecimentos <Icons.ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- NOVA SEÇÃO: Questionário de Reflexão ---
+        const QuizSection = () => {
+            const [openId, setOpenId] = useState(null);
+
+            const quizData = [
+                {
+                    id: 1,
+                    q: 'A influência da base na densidade da informação',
+                    desc: 'Ao comparar a base decimal com a base binária, qual a relação entre o número de símbolos disponíveis e a extensão necessária para representar o mesmo valor? Por que uma base menor é vantajosa para o hardware?',
+                    a: 'Quanto menor a base, maior é a extensão (número de dígitos) necessária para representar o mesmo valor. Por exemplo, o número "dez" em decimal tem 2 dígitos, mas em binário exige 4 bits (1010). A vantagem para o hardware é a simplicidade e precisão: é muito mais fácil e confiável para um circuito diferenciar apenas dois estados (existência ou não de uma grandeza elétrica) do que dez níveis diferentes de voltagem.'
+                },
+                {
+                    id: 2,
+                    q: 'O conceito de "Existência" vs. "Opostos"',
+                    desc: 'A base binária é frequentemente explicada como "ligado/desligado". Qual a importância de focar na "existência ou não de uma grandeza física" para a confiabilidade de um circuito eletrônico?',
+                    a: 'Se tentássemos usar a base decimal, o hardware teria que diferenciar dez valores de voltagem de forma extremamente precisa. Ao focar apenas na "existência" (tem energia ou não tem), o sistema reduz drasticamente os erros causados por oscilações ou ruídos físicos. Basta detectar se algo "está lá" ou não.'
+                },
+                {
+                    id: 3,
+                    q: 'Valor Relativo e Significância',
+                    desc: 'Em um sistema de numeração posicional, um erro de leitura no bit mais significativo (MSB) tem o mesmo impacto que um erro no bit menos significativo (LSB)?',
+                    a: 'Não, o impacto é muito diferente. Devido à notação posicional, o bit mais à esquerda (MSB - Most Significant Bit) tem o maior valor relativo, pois é multiplicado pela maior potência da base. Um erro nele altera o número drasticamente. Já um erro no bit mais à direita (LSB) altera o valor final em apenas 1 unidade.'
+                },
+                {
+                    id: 4,
+                    q: 'A "perda" de espaço em Discos Rígidos (GB vs GiB)',
+                    desc: 'Como a diferença conceitual entre o Sistema Internacional (potências de 10) e o padrão IEC (potências de 2) gera a discrepância na capacidade de armazenamento reportada pelo Sistema Operacional?',
+                    a: 'Os fabricantes de HDs vendem o espaço usando o Sistema Internacional, onde 1 Gigabyte (GB) = 10⁹ bytes (1.000.000.000 bytes). Porém, o Windows e outros sistemas operacionais calculam usando potências de 2 (o correto seria Gibibyte - GiB), onde 1 GiB = 2³⁰ bytes (1.073.741.824 bytes). Essa diferença matemática faz com que o sistema reporte um número menor.'
+                },
+                {
+                    id: 5,
+                    q: 'O problema das Duas Faces do Zero',
+                    desc: 'Nas representações de Sinal/Valor e Complemento a 1, o sistema acaba gerando duas representações diferentes para o número zero (+0 e -0). Por que isso é um problema de design?',
+                    a: 'Ter +0 e -0 complica o projeto do processador. Circuitos extras seriam necessários apenas para a máquina entender que dois padrões de bits diferentes representam o mesmo valor matemático (zero), o que aumenta desnecessariamente o custo, o tempo de processamento e a complexidade da arquitetura.'
+                },
+                {
+                    id: 6,
+                    q: 'Eficiência de Hardware no Complemento a 2',
+                    desc: 'Como a representação em Complemento a 2 permite que um engenheiro simplifique o hardware de um processador?',
+                    a: 'O Complemento a 2 permite simplificar o hardware pois a máquina pode realizar subtrações utilizando os mesmos circuitos de soma. Basta somar o número positivo com a representação negativa do outro (obtida invertendo os bits e somando 1), eliminando a necessidade de construir circuitos exclusivos para subtrair.'
+                },
+                {
+                    id: 7,
+                    q: 'Expansão de Capacidade (8-bits para 16-bits)',
+                    desc: 'Se um sistema evolui de 8 bits para 16 bits, o aumento na quantidade de números distintos que ele pode representar é linear ou exponencial?',
+                    a: 'O aumento é exponencial. A quantidade de números distintos é dada pela fórmula 2ⁿ. Um sistema de 8 bits representa 256 valores (2⁸). Ao dobrar para 16 bits, ele passa a representar 65.536 valores (2¹⁶), um crescimento muito maior do que o simples dobro.'
+                },
+                {
+                    id: 8,
+                    q: 'Limitações da Palavra (Overflow)',
+                    desc: 'Os computadores processam informações em blocos de tamanho fixo chamados "palavras". O que acontece se o resultado de um cálculo for maior que a capacidade dessa palavra?',
+                    a: 'Ocorre o "overflow" (transbordamento). Como o computador trabalha com blocos físicos de tamanho fixo, quando o resultado exige um bit extra que não cabe na "palavra" (ex: o 9º bit num sistema de 8 bits), esse bit é simplesmente descartado e perdido. Isso resulta em um valor matemático totalmente incorreto e inconsistente para o sistema.'
+                }
+            ];
+
+            return (
+                <div className="space-y-8 animate-fade-in max-w-4xl mx-auto">
+                    <div className="text-center space-y-4 mb-12">
+                        <h2 className="text-3xl font-bold">Reflexão Computacional</h2>
+                        <p className="text-slate-400">
+                            Teste seus conhecimentos com questões avançadas sobre os limites e a lógica da arquitetura dos computadores. Clique na pergunta para revelar o gabarito comentado do professor.
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        {quizData.map((item) => {
+                            const isOpen = openId === item.id;
+                            return (
+                                <div key={item.id} className="bg-slate-800/60 border border-slate-700 rounded-xl overflow-hidden transition-all duration-300">
+                                    <button
+                                        onClick={() => setOpenId(isOpen ? null : item.id)}
+                                        className="w-full text-left p-5 flex items-start justify-between gap-4 hover:bg-slate-800 transition-colors focus:outline-none"
+                                    >
+                                        <div className="space-y-1">
+                                            <h3 className="font-bold text-slate-100 flex items-center gap-2">
+                                                <span className="text-cyan-500">Q{item.id}.</span> {item.q}
+                                            </h3>
+                                            <p className="text-sm text-slate-400 leading-relaxed pr-8">{item.desc}</p>
+                                        </div>
+                                        <Icons.ChevronDown className={`w-6 h-6 text-slate-500 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-400' : ''}`} />
+                                    </button>
+
+                                    <div
+                                        className={`bg-slate-900/50 border-t border-slate-700/50 overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}
+                                    >
+                                        <div className="p-5 text-slate-300 text-sm leading-relaxed border-l-4 border-cyan-500 ml-5 my-4">
+                                            <strong className="text-cyan-400 block mb-2">Gabarito Comentado:</strong>
+                                            {item.a}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Componente Principal App ---
+        function App() {
+            const [activeTab, setActiveTab] = useState('fundamentos');
+            const [apiKey, setApiKey] = useState(() => localStorage.getItem('gemini_api_key') || '');
+            const [showKeyModal, setShowKeyModal] = useState(false);
+
+            const handleSaveKey = (key) => {
+                setApiKey(key);
+                localStorage.setItem('gemini_api_key', key);
+                setShowKeyModal(false);
+            };
+
+            return (
+                <div className="min-h-screen selection:bg-cyan-500/30">
+                    <nav className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-700 p-4 shadow-lg shadow-black/20">
+                        <div className="max-w-7xl mx-auto flex flex-col xl:flex-row justify-between items-center gap-4">
+                            <div className="flex items-center gap-3 text-cyan-400 font-bold text-xl">
+                                <Icons.Binary className="w-6 h-6" />
+                                <span>Aula 02: Representação</span>
+                            </div>
+                            <div className="flex items-center gap-4 w-full xl:w-auto overflow-x-auto pb-2 xl:pb-0 scrollbar-hide">
+                                <div className="flex gap-2 whitespace-nowrap px-2">
+                                    <TabButton active={activeTab === 'fundamentos'} onClick={() => setActiveTab('fundamentos')}>
+                                        <Icons.Zap className="w-4 h-4 mr-2 inline" /> Decimal vs Binário
+                                    </TabButton>
+                                    <TabButton active={activeTab === 'estruturas'} onClick={() => setActiveTab('estruturas')}>
+                                        <Icons.Layers className="w-4 h-4 mr-2 inline" /> Bits e Bytes
+                                    </TabButton>
+                                    <TabButton active={activeTab === 'grandezas'} onClick={() => setActiveTab('grandezas')}>
+                                        <Icons.Database className="w-4 h-4 mr-2 inline" /> Grandezas
+                                    </TabButton>
+                                    <TabButton active={activeTab === 'lab'} onClick={() => setActiveTab('lab')}>
+                                        <Icons.Calculator className="w-4 h-4 mr-2 inline" /> Lab 8-bits
+                                    </TabButton>
+                                    <TabButton active={activeTab === 'quiz'} onClick={() => setActiveTab('quiz')}>
+                                        <Icons.BookOpen className="w-4 h-4 mr-2 inline" /> Questionário
+                                    </TabButton>
+                                </div>
+
+                                {/* Botão de Configuração de Chave API */}
+                                <button
+                                    onClick={() => setShowKeyModal(true)}
+                                    className={`p-2 rounded-full transition-colors shrink-0 ${apiKey ? 'text-green-400 bg-green-400/10 hover:bg-green-400/20' : 'text-amber-400 bg-amber-400/10 hover:bg-amber-400/20'}`}
+                                    title={apiKey ? "Chave API Configurada" : "Configurar Chave API"}
+                                >
+                                    <Icons.Key className="w-5 h-5" />
+                                </button>
+                            </div>
+                        </div>
+                    </nav>
+
+                    <main className="max-w-6xl mx-auto p-4 py-8">
+                        {activeTab === 'fundamentos' && <DecimalVsBinarySection onNext={() => setActiveTab('estruturas')} />}
+                        {activeTab === 'estruturas' && <BitsAndBytesSection onNext={() => setActiveTab('grandezas')} />}
+                        {activeTab === 'grandezas' && <PrefixesSection onNext={() => setActiveTab('lab')} apiKey={apiKey} onRequestKey={() => setShowKeyModal(true)} />}
+                        {activeTab === 'lab' && <BinaryLab onNext={() => setActiveTab('quiz')} apiKey={apiKey} onRequestKey={() => setShowKeyModal(true)} />}
+                        {activeTab === 'quiz' && <QuizSection />}
+                    </main>
+
+                    {/* Modal de API Key */}
+                    {showKeyModal && <ApiKeyModal onClose={() => setShowKeyModal(false)} onSave={handleSaveKey} currentKey={apiKey} />}
+
+                    <footer className="border-t border-slate-800 mt-16 py-8 text-center text-slate-500 text-sm">
+                        <p>Desenvolvido para estudantes de Engenharia.</p>
+                        <p>Baseado no material: Introdução à Programação e Fundamentos da Arquitetura Computacional.</p>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Inicialização do React 18 no navegador
+        const rootElement = document.getElementById('root');
+        const root = ReactDOM.createRoot(rootElement);
+        root.render(<App />);
+    </script>
+</body>
+
+</html>
