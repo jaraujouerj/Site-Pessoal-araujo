@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engenharia e Programação - Guia Interativo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .code-block {
+            font-family: 'Fira Code', 'Courier New', monospace;
+        }
+
+        .step-highlight {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .step-active {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+            transform: scale(1.02);
+            color: #1e1b4b !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+
+    <header class="bg-indigo-900 text-white py-10 px-6 shadow-xl border-b-4 border-indigo-500">
+        <div class="max-w-5xl mx-auto flex justify-between items-start">
+            <div>
+                <h1 class="text-4xl font-extrabold mb-2 flex items-center gap-3">
+                    <i data-lucide="binary" class="w-10 h-10 text-indigo-400"></i> Engenharia & Código
+                </h1>
+                <p class="text-indigo-200 text-lg max-w-2xl">Entendendo a lógica de programação passo a passo.</p>
+            </div>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 bg-white shadow-md z-40 border-b border-slate-200">
+        <div class="max-w-5xl mx-auto flex overflow-x-auto p-2 gap-2">
+            <button onclick="switchTab('conceitos')" id="btn-conceitos"
+                class="tab-btn px-6 py-3 rounded-full font-bold transition whitespace-nowrap bg-indigo-600 text-white shadow-md">1.
+                Conceitos</button>
+            <button onclick="switchTab('modos')" id="btn-modos"
+                class="tab-btn px-6 py-3 rounded-full font-bold transition whitespace-nowrap text-slate-600 hover:bg-slate-100">2.
+                Modos Python</button>
+            <button onclick="switchTab('simulador')" id="btn-simulador"
+                class="tab-btn px-6 py-3 rounded-full font-bold transition whitespace-nowrap text-slate-600 hover:bg-slate-100">3.
+                Simulador de Memória</button>
+            <button onclick="switchTab('slides')" id="btn-slides"
+                class="tab-btn px-6 py-3 rounded-full font-bold transition whitespace-nowrap text-slate-600 hover:bg-slate-100">4.
+                Slides da Aula</button>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto p-6 md:p-10">
+        <!-- CONTEÚDO 1: CONCEITOS -->
+        <div id="conceitos" class="tab-content active space-y-12">
+            <section class="grid md:grid-cols-2 gap-10">
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-slate-800 border-l-8 border-indigo-600 pl-4">A Lógica na
+                        Engenharia</h2>
+                    <p class="text-lg text-slate-600">A programação na engenharia serve para automatizar cálculos
+                        repetitivos e simular cenários complexos.</p>
+
+                    <div class="bg-white p-6 rounded-2xl border-2 border-indigo-100 shadow-sm space-y-4">
+                        <h4 class="font-bold text-indigo-900 flex items-center gap-2">
+                            <i data-lucide="lightbulb" class="w-5 h-5 text-amber-500"></i> Analogia Prática
+                        </h4>
+                        <p class="text-sm text-slate-500 mb-2">Selecione sua área para entender Lógica vs. Sintaxe:</p>
+                        <div class="flex gap-2">
+                            <select id="eng-type"
+                                class="flex-1 p-2 rounded-lg border border-slate-200 text-sm outline-none focus:border-indigo-500">
+                                <option value="Civil">Engenharia Civil</option>
+                                <option value="Elétrica">Engenharia Elétrica</option>
+                                <option value="Mecânica">Engenharia Mecânica</option>
+                                <option value="Produção">Engenharia de Produção</option>
+                            </select>
+                            <button onclick="showAnalogy()"
+                                class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-indigo-700 transition shadow-sm">
+                                Exibir
+                            </button>
+                        </div>
+                        <div id="analogy-display"
+                            class="hidden p-4 bg-indigo-50 rounded-xl text-indigo-900 text-sm font-medium border-l-4 border-indigo-400 fade-in">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-900 text-white p-8 rounded-3xl shadow-lg h-fit">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-lucide="brain"></i> Desafio de
+                        Raciocínio</h3>
+                    <p class="text-indigo-200 text-sm mb-6">Pratique o planejamento algorítmico antes de escrever
+                        qualquer código.</p>
+                    <button onclick="showChallenge()"
+                        class="w-full py-3 bg-white/10 hover:bg-white/20 rounded-xl text-sm font-bold transition flex items-center justify-center gap-2 shadow-inner">
+                        <i data-lucide="target"></i> Sortear Desafio
+                    </button>
+                    <div id="challenge-text"
+                        class="mt-4 text-sm text-indigo-50 hidden bg-indigo-950/50 p-4 rounded-xl border border-indigo-800 fade-in leading-relaxed">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- CONTEÚDO 2: MODOS PYTHON -->
+        <div id="modos" class="tab-content space-y-10">
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                <h2 class="text-2xl font-bold mb-6 text-slate-800">Ciclo de Execução</h2>
+                <p class="text-slate-600 mb-6 leading-relaxed">O Python não é apenas "lido" pela máquina. O código que
+                    você escreve passa por uma fase de compilação rápida para <strong>Bytecode</strong>, que é uma
+                    linguagem intermediária lida pela PVM (Python Virtual Machine).</p>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-6 bg-slate-900 rounded-2xl shadow-inner border border-slate-800">
+                        <span class="text-indigo-400 text-xs font-bold uppercase tracking-wider">Código Fonte
+                            (.py)</span>
+                        <pre class="text-emerald-400 text-sm mt-4 font-mono"><code>vazao = 10
+tempo = 5
+print(vazao * tempo)</code></pre>
+                    </div>
+                    <div class="p-6 bg-indigo-50 border border-indigo-100 rounded-2xl">
+                        <span class="text-indigo-600 text-xs font-bold uppercase tracking-wider">Bytecode (.pyc)</span>
+                        <p class="text-slate-600 text-sm mt-4 leading-relaxed">São instruções de baixo nível (como
+                            LOAD_CONST, BINARY_MULTIPLY) que a máquina virtual do Python entende e executa de forma
+                            muito mais rápida que o texto puro.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO 3: SIMULADOR -->
+        <div id="simulador" class="tab-content space-y-6">
+            <div
+                class="bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+                <div class="md:w-1/2 p-8 border-r border-slate-100 flex flex-col">
+                    <h3 class="text-xl font-bold mb-6 text-slate-800">Rastreio de Código</h3>
+                    <div
+                        class="bg-slate-900 p-6 rounded-2xl code-block text-emerald-400 text-sm space-y-3 mb-6 shadow-inner">
+                        <div id="line-1" class="step-highlight px-3 py-1 rounded"><span>vazao = 150</span></div>
+                        <div id="line-2" class="step-highlight px-3 py-1 rounded"><span>tempo = 10</span></div>
+                        <div id="line-3" class="step-highlight px-3 py-1 rounded"><span>volume = vazao * tempo</span>
+                        </div>
+                        <div id="line-4" class="step-highlight px-3 py-1 rounded"><span>print(volume)</span></div>
+                    </div>
+                    <div class="flex gap-3 mb-4 mt-auto">
+                        <button onclick="runNextStep()"
+                            class="flex-1 bg-indigo-600 text-white font-bold py-4 rounded-xl hover:bg-indigo-700 transition shadow-md active:scale-95">Próximo
+                            Passo</button>
+                        <button onclick="resetSim()"
+                            class="p-4 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition shadow-sm"
+                            title="Reiniciar"><i data-lucide="rotate-ccw"></i></button>
+                    </div>
+                    <button onclick="explainCurrentState()" id="btn-explain"
+                        class="w-full py-3 border-2 border-indigo-100 text-indigo-700 bg-indigo-50/50 rounded-xl font-bold hover:bg-indigo-100 transition">
+                        Explicar o que aconteceu
+                    </button>
+                </div>
+
+                <div class="md:w-1/2 p-8 bg-slate-50 flex flex-col">
+                    <h4 class="font-bold text-slate-500 text-xs uppercase tracking-widest mb-6">Memória Principal (RAM)
+                    </h4>
+                    <div class="space-y-4 mb-8">
+                        <div
+                            class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-xs text-slate-500 font-mono">Endereço 0x1 [vazao]</span>
+                            <span id="mem-vazao" class="font-bold text-lg text-slate-800">-</span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
+                            <span class="text-xs text-slate-500 font-mono">Endereço 0x2 [tempo]</span>
+                            <span id="mem-tempo" class="font-bold text-lg text-slate-800">-</span>
+                        </div>
+                        <div
+                            class="flex justify-between items-center p-4 bg-white rounded-xl border-2 border-indigo-100 shadow-sm">
+                            <span class="text-xs text-indigo-500 font-mono font-bold">Endereço 0x3 [volume]</span>
+                            <span id="mem-volume" class="font-bold text-xl text-indigo-600">-</span>
+                        </div>
+                    </div>
+
+                    <div id="ai-response-container"
+                        class="hidden mt-auto p-5 bg-indigo-900 text-indigo-50 rounded-xl shadow-lg border-l-4 border-indigo-400 fade-in">
+                        <div class="flex items-center gap-2 mb-2 text-indigo-300 font-bold text-sm">
+                            <i data-lucide="info" class="w-4 h-4"></i> Análise do Passo
+                        </div>
+                        <p id="ai-response-text" class="text-sm leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTEÚDO 4: SLIDES -->
+        <div id="slides" class="tab-content space-y-8">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center">
+                <h2 class="text-2xl font-bold mb-6 flex items-center justify-center gap-2 text-indigo-800">
+                    <i data-lucide="presentation" class="text-indigo-600"></i> Slides da Aula
+                </h2>
+                <p class="text-slate-600 mb-6">Acesse os slides utilizados nesta aula clicando no botão abaixo.</p>
+                <a href="https://drive.google.com/file/d/1YsLa4hTm4OHpP8voddcbfcaVQ-5NQ8iZ/view?usp=sharing"
+                    target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-xl transition active:scale-95">
+                    <i data-lucide="external-link" class="w-5 h-5"></i> Abrir Slides no Google Drive
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // Bancos de Dados Locais
+        const dbAnalogias = {
+            "Civil": "A Lógica de Programação é o projeto estrutural e a planta do prédio. A Sintaxe (Python, C++) é o material físico (concreto, aço, tijolos) que você escolhe para construí-lo.",
+            "Elétrica": "A Lógica é o diagrama unifilar e o projeto do circuito na sua mente. A Sintaxe são os componentes físicos, fios e disjuntores específicos que você compra para a montagem.",
+            "Mecânica": "A Lógica é a cinemática e a modelagem matemática do motor. A Sintaxe representa as ferramentas, parafusos e engrenagens específicas usadas na fabricação.",
+            "Produção": "A Lógica é o fluxograma do processo produtivo idealizado. A Sintaxe são os operadores, as máquinas reais e as esteiras do chão de fábrica."
+        };
+
+        const dbDesafios = [
+            "Um reservatório precisa ser enchido. A bomba A enche 50L/min e a bomba B enche 30L/min. Se ligarmos as duas, qual a lógica matemática para descobrir em quanto tempo um tanque de 'X' litros estará cheio?",
+            "Uma máquina corta barras de aço de 3 metros em peças de 40 cm. Como você escreveria a regra lógica para calcular quantas peças inteiras são obtidas e qual será o tamanho da sobra (sucata)?",
+            "Um sensor lê a temperatura de um motor a cada segundo. Escreva (em texto) a regra lógica para acionar um alarme APENAS se a temperatura subir mais de 10°C em um intervalo menor que 5 segundos.",
+            "Você tem um orçamento para a obra e os custos de 3 fornecedores diferentes. Qual o algoritmo mental (passo a passo) para comparar os três, escolher o mais barato, e verificar se cabe no orçamento total?"
+        ];
+
+        const dbExplicacoes = {
+            1: "A CPU solicitou ao Sistema Operacional um espaço na memória RAM, deu a ele o rótulo 'vazao' e armazenou o número inteiro 150 lá dentro.",
+            2: "Um novo espaço foi alocado na memória RAM com o nome 'tempo', e o valor 10 foi guardado. Agora temos duas variáveis ativas e prontas para uso.",
+            3: "A Unidade Lógica e Aritmética (U.L.A) da CPU buscou os valores 150 e 10 na memória, realizou a multiplicação, e guardou o resultado (1500) em um novo espaço de memória chamado 'volume'.",
+            4: "A função print() foi chamada. A CPU acessou a memória 'volume', pegou o valor 1500 e enviou esse dado para a interface de saída padrão (o seu monitor/console)."
+        };
+
+        let step = 0;
+
+        // Funções de Interface
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-indigo-600', 'text-white', 'shadow-md');
+                el.classList.add('text-slate-600', 'hover:bg-slate-100');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('btn-' + tabId).classList.add('bg-indigo-600', 'text-white', 'shadow-md');
+        }
+
+        // Funções Lógicas Locais (Sem IA externa)
+        function showAnalogy() {
+            const display = document.getElementById('analogy-display');
+            const engType = document.getElementById('eng-type').value;
+            display.innerText = dbAnalogias[engType];
+
+            // Reinicia a animação
+            display.classList.remove('hidden');
+            display.classList.remove('fade-in');
+            void display.offsetWidth; // trigger reflow
+            display.classList.add('fade-in');
+        }
+
+        function showChallenge() {
+            const text = document.getElementById('challenge-text');
+            const randomIdx = Math.floor(Math.random() * dbDesafios.length);
+            text.innerText = dbDesafios[randomIdx];
+
+            text.classList.remove('hidden');
+            text.classList.remove('fade-in');
+            void text.offsetWidth;
+            text.classList.add('fade-in');
+        }
+
+        // Funções do Simulador
+        function runNextStep() {
+            if (step >= 4) return;
+            step++;
+
+            document.querySelectorAll('.step-highlight').forEach(el => el.classList.remove('step-active'));
+            document.getElementById('line-' + step).classList.add('step-active');
+
+            if (step === 1) document.getElementById('mem-vazao').innerText = '150';
+            if (step === 2) document.getElementById('mem-tempo').innerText = '10';
+            if (step === 3) document.getElementById('mem-volume').innerText = '1500';
+
+            // Oculta explicação anterior se houver
+            document.getElementById('ai-response-container').classList.add('hidden');
+        }
+
+        function resetSim() {
+            step = 0;
+            document.getElementById('mem-vazao').innerText = '-';
+            document.getElementById('mem-tempo').innerText = '-';
+            document.getElementById('mem-volume').innerText = '-';
+            document.querySelectorAll('.step-highlight').forEach(el => el.classList.remove('step-active'));
+            document.getElementById('ai-response-container').classList.add('hidden');
+        }
+
+        function explainCurrentState() {
+            if (step === 0) {
+                alert("Execute pelo menos o primeiro passo no botão 'Próximo Passo'!");
+                return;
+            }
+
+            const container = document.getElementById('ai-response-container');
+            const text = document.getElementById('ai-response-text');
+
+            text.innerText = dbExplicacoes[step];
+
+            container.classList.remove('hidden');
+            container.classList.remove('fade-in');
+            void container.offsetWidth;
+            container.classList.add('fade-in');
+        }
+    </script>
+</body>
+
+</html>
