@@ -62,8 +62,8 @@ Introdução a algoritmos e lógica de programação. Tipos de dados básicos. E
 <td><br>Cap. 1 (1.1-1.2)<br>Cap. 1 (1.3-1.4)<br>Cap. 1 (1.5-1.7)</td></tr>
 <tr>
 <td>03</td>
-<td><b>Arquitetura e execução:</b> Modelo de Von Neumann, CPU, Memória e SO. <br>
-<b>O Ambiente de Trabalho:</b> Uso do interpretador interativo vs. scripts .py.</td>
+<td><a href="/algcomp/aula03"><b>Arquitetura e execução:</b></a> Modelo de Von Neumann, CPU, Memória e SO. <br>
+<a href="/algcomp/aula03.1"><b>O Ambiente de Trabalho:</b></a> Uso do interpretador interativo vs. scripts .py.</td>
 <td>Cap. 1 (1.8-1.12)<br><br>Cap. 2 (2.1)</td></tr>
 <tr><td>04</td>
 <td><b>Pensamento Algorítmico:</b> Definição de passos não ambíguos e refinamentos sucessivos.<br>
