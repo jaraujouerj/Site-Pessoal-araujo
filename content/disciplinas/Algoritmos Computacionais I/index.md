@@ -66,7 +66,7 @@ Introdução a algoritmos e lógica de programação. Tipos de dados básicos. E
 <a href="/algcomp/aula03.1"><b>O Ambiente de Trabalho:</b></a> Uso do interpretador interativo vs. scripts .py.</td>
 <td>Cap. 1 (1.8-1.12)<br><br>Cap. 2 (2.1)</td></tr>
 <tr><td>04</td>
-<td><b>Pensamento Algorítmico:</b> Definição de passos não ambíguos e refinamentos sucessivos.<br>
+<td><a href="/algcomp/aula04"><b>Pensamento Algorítmico:</b></a> Definição de passos não ambíguos e refinamentos sucessivos.<br>
 <b>Algoritmos no Papel:</b> Fluxogramas e Pseudo-código para problemas cotidianos.</td>
 <td>Cap. 2 (2.2-2.3)<br><br>Cap. 2 (2.4-2.5)</td></tr>
 </tbody>
@@ -86,7 +86,7 @@ Introdução a algoritmos e lógica de programação. Tipos de dados básicos. E
 <tr><th>n&ordm;</th><th>Conteúdo Programático</th><th>Referência</th></tr>
 </thead>
 <tbody>
-<tr><td>05</td><td><b>Bases da Programação:</b> Identificadores, Dados Numéricos, Tipos e Constantes Numéricos.</td><td>Cap. 2 (2.6-2.9)</td></tr>
+<tr><td>05</td><td><b>Bases da Programação:</b> <a href="https://drive.google.com/file/d/1ZSGamw9lrHfhAOApT9nEeryeYgCjyY9z/view?usp=sharing">Identificadores</a>, Dados Numéricos, Tipos e Constantes Numéricos.</td><td>Cap. 2 (2.6-2.9)</td></tr>
 <tr><td>06</td><td><b>Estrutura básica de programa:</b> Sequência, Entrada e saída, Expressões simples</td><td>Cap. 3.1.1</td></tr>
 <tr><td>07</td><td><b>Estruturas de decisão (if):</b> Estruturas de Seleção simples e compostas (if/else).</td><td>Cap. 3 (3.1-3.2)</td></tr>
 <tr><td>08</td><td><b>Iteração:</b> While e laços contados.<br><b>Condições Complexas:</b> Desafios de lógica (ex: cálculo de ano bissexto).</td><td>Cap.3.1.3, Cap 3.5-3.6<br>Cap. 3</td></tr>
