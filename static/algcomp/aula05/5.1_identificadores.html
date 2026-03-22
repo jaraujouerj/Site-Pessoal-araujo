@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 5: Identificadores em Python - Engenharia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .page-section {
+            display: none;
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-active {
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Questionário Accordion */
+        .qa-card {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .qa-card.open .qa-answer {
+            max-height: 200px;
+        }
+
+        .qa-card.open i {
+            transform: rotate(180deg);
+        }
+
+        /* Game Styles */
+        .game-btn {
+            @apply px-6 py-4 rounded-xl font-bold text-sm transition-all border-2;
+        }
+
+        .valid-option {
+            @apply border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100;
+        }
+
+        .invalid-option {
+            @apply border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100;
+        }
+
+        .keyword-badge {
+            @apply bg-white/5 border border-white/10 p-2 rounded text-[10px] font-mono text-blue-300 hover:bg-white/10 transition-colors;
+        }
+
+        /* Image Placeholder Style */
+        .img-container {
+            @apply flex flex-col items-center justify-center p-4 bg-slate-50 rounded-2xl border border-slate-100;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Navegação -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6">
+        <div class="max-w-7xl mx-auto h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('intro')">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fab fa-python text-white"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight">PY<span class="text-blue-600">ENG</span></span>
+            </div>
+            <div class="flex gap-8 text-sm font-semibold text-slate-500">
+                <button onclick="showSection('teoria')" class="nav-btn" id="btn-teoria">Regras</button>
+                <button onclick="showSection('jogo')" class="nav-btn" id="btn-jogo">Laboratório</button>
+                <button onclick="showSection('quest')" class="nav-btn" id="btn-quest">Questionário</button>
+                <a href="https://drive.google.com/file/d/1ulkyhJ6CVC6DxHNki3UL3b1_vnWWXR-A/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"><i class="fas fa-file-powerpoint"></i> Slides</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro" class="page-section active pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h4 class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-4">Algoritmos Computacionais I •
+                Aula
+                05 • Identificadores</h4>
+            <h1 class="text-5xl md:text-6xl font-black mb-8 leading-tight">Identificadores: <br> Nomenclatura Técnica
+            </h1>
+            <p class="text-xl text-slate-500 mb-12 max-w-2xl mx-auto">
+                Na engenharia, a precisão começa no nome. Domine as regras e as convenções profissionais de
+                Python.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="showSection('teoria')"
+                    class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all">Começar
+                    Teoria</button>
+                <div class="flex items-center gap-2 text-slate-400 text-sm italic">
+                    <i class="fas fa-book-open"></i> Item 2.6 do Livro Introdução à Programação e aos Algoritmos
+                    (Ribeiro)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teoria -->
+    <section id="teoria" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <!-- Regras Léxicas -->
+                <div>
+                    <h2 class="text-3xl font-black mb-8 flex items-center gap-3">
+                        <span
+                            class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-lg">1</span>
+                        Regras de Formação
+                    </h2>
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                            <i class="fas fa-font text-blue-500 mt-1"></i>
+                            <p class="text-sm">Apenas letras (a-z, A-Z), dígitos (0-9) e o <i>underscore</i>
+                                (<code>_</code>).</p>
+                        </div>
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                            <i class="fas fa-ban text-rose-500 mt-1"></i>
+                            <p class="text-sm">Proibido começar com números ou usar espaços e símbolos especiais (exceto
+                                underline _).</p>
+                        </div>
+                        <div class="flex gap-4 p-3 hover:bg-slate-50 rounded-xl transition-colors">
+                            <i class="fas fa-exchange-alt text-amber-500 mt-1"></i>
+                            <p class="text-sm"><b>Case Sensitive:</b> <code>vazao</code> &ne; <code>Vazao</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Palavras Reservadas -->
+                <div class="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl">
+                    <h3 class="text-blue-400 font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-lock"></i> Palavras Reservadas (Keywords)
+                    </h3>
+                    <p class="text-[11px] text-slate-400 mb-6 uppercase tracking-wider font-bold">Total: 35 Palavras
+                        (Python 3.11+)</p>
+
+                    <div class="grid grid-cols-4 md:grid-cols-5 gap-1.5" id="keywords-container">
+                        <!-- Gerado via JS para garantir todas -->
+                    </div>
+                    <p class="mt-6 text-[10px] text-slate-500 italic border-t border-white/10 pt-4">
+                        *Estas palavras possuem significado fixo e não podem ser usadas como identificadores.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Importância de Nomes Significativos -->
+            <div class="mb-16 bg-white border border-slate-200 p-10 rounded-[3rem] shadow-sm">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-3xl font-black mb-6">Por que nomes significativos?</h2>
+                    <p class="text-slate-600 leading-relaxed mb-8">
+                        Em projetos de engenharia, o código é lido muito mais vezes do que é escrito. Nomes genéricos
+                        como <code>x</code> ou <code>v1</code> aumentam a probabilidade de erros de cálculo e dificultam
+                        a manutenção por outros engenheiros da equipe.
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-6 text-left">
+                        <div class="p-5 bg-rose-50 border border-rose-100 rounded-2xl">
+                            <h4 class="font-bold text-rose-700 mb-2 flex items-center gap-2"><i
+                                    class="fas fa-times-circle"></i> Nome Ruim</h4>
+                            <code class="text-xs bg-white p-2 rounded block">v = d / t</code>
+                            <p class="text-[11px] mt-2 text-rose-600">O que é v? Vazão? Velocidade? Voltagem?</p>
+                        </div>
+                        <div class="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl">
+                            <h4 class="font-bold text-emerald-700 mb-2 flex items-center gap-2"><i
+                                    class="fas fa-check-circle"></i> Nome Significativo</h4>
+                            <code
+                                class="text-xs bg-white p-2 rounded block">velocidade_escoamento = distancia / tempo</code>
+                            <p class="text-[11px] mt-2 text-emerald-600">Claro, descritivo e autossuficiente.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Convenções de Estilo -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-black mb-8 flex items-center gap-3">
+                    <span
+                        class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center text-lg">2</span>
+                    Estilos de Escrita Profissional
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Snake Case -->
+                    <div
+                        class="bg-indigo-600 p-8 rounded-3xl text-white shadow-lg relative overflow-hidden flex flex-col items-center text-center">
+                        <div class="img-container mb-6 w-full">
+                            <img src="cobra.png" alt="Ilustração de uma Cobra" class="w-16 h-16 mb-2">
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Estilo
+                                Cobra</span>
+                        </div>
+                        <h4 class="font-bold text-xl mb-4">Snake Case</h4>
+                        <p class="text-indigo-100 text-sm mb-6 leading-relaxed">
+                            O padrão oficial do Python (PEP 8). Palavras em minúsculo separadas por sublinhado.
+                        </p>
+                        <div class="bg-black/20 p-4 rounded-xl font-mono text-xs w-full">
+                            temperatura_reator = 350.5
+                        </div>
+                    </div>
+
+                    <!-- Camel Case -->
+                    <div
+                        class="bg-white border-2 border-slate-200 p-8 rounded-3xl shadow-sm relative overflow-hidden flex flex-col items-center text-center">
+                        <div class="img-container mb-6 w-full">
+                            <img src="camelo.png" alt="Ilustração de um Camelo" class="w-16 h-16 mb-2">
+                            <span class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Estilo
+                                Camelo</span>
+                        </div>
+                        <h4 class="font-bold text-xl mb-4 text-slate-800">Camel Case</h4>
+                        <p class="text-slate-500 text-sm mb-6 leading-relaxed">
+                            Comum em Java/C#. As "corcovas" são as letras maiúsculas que iniciam cada nova palavra.
+                        </p>
+                        <div
+                            class="bg-slate-50 p-4 rounded-xl font-mono text-xs text-slate-600 border border-slate-100 w-full">
+                            temperaturaReator = 350.5
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Infográfico -->
+            <div class="mt-16 flex justify-center">
+                <img src="infografico.png" alt="Infográfico sobre Identificadores em Python"
+                    class="rounded-3xl shadow-sm border border-slate-200 max-w-full">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Laboratório (Jogo) -->
+    <section id="jogo" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black mb-4">Laboratório de Validação</h2>
+                <p class="text-slate-500">Analise o identificador abaixo. Ele é válido para o Python?</p>
+            </div>
+
+            <div
+                class="bg-white rounded-[3rem] p-12 shadow-sm border border-slate-200 text-center relative overflow-hidden">
+                <div id="game-progress" class="absolute top-0 left-0 h-2 bg-blue-600 w-0 transition-all duration-500">
+                </div>
+
+                <div class="mb-12">
+                    <span
+                        class="text-[10px] uppercase font-bold tracking-widest text-slate-400 bg-slate-100 px-3 py-1 rounded-full"
+                        id="game-step">Teste 1/5</span>
+                    <div id="game-card-display"
+                        class="mt-8 text-3xl md:text-4xl font-mono font-bold text-slate-800 bg-slate-50 py-12 rounded-3xl border-2 border-dashed border-slate-200 transition-all">
+                        -- carregando --
+                    </div>
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4 justify-center">
+                    <button onclick="submitGameAnswer(true)" class="game-btn valid-option">
+                        <i class="fas fa-check mr-2"></i> É VÁLIDO
+                    </button>
+                    <button onclick="submitGameAnswer(false)" class="game-btn invalid-option">
+                        <i class="fas fa-times mr-2"></i> É INVÁLIDO
+                    </button>
+                </div>
+
+                <div id="game-feedback" class="mt-8 h-8 font-bold text-sm"></div>
+            </div>
+
+            <!-- Score -->
+            <div class="mt-8 bg-slate-900 p-6 rounded-2xl flex justify-between items-center text-white">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-xl"><i
+                            class="fas fa-brain"></i></div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Análise Léxica</p>
+                        <p id="score-text" class="text-xl font-bold">Score: 0</p>
+                    </div>
+                </div>
+                <button onclick="resetGame()"
+                    class="bg-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Tentar
+                    Novamente</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questionário -->
+    <section id="quest" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-black mb-4 text-center">Questionário de Identificadores</h2>
+            <p class="text-center text-slate-500 mb-8">Responda às 10 questões sobre identificadores em Python.</p>
+
+            <!-- Score do Questionário -->
+            <div
+                class="bg-slate-900 p-5 rounded-2xl flex justify-between items-center text-white mb-10 sticky top-16 z-40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-xl"><i
+                            class="fas fa-star"></i></div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Acertos</p>
+                        <p id="quiz-score-text" class="text-xl font-bold">Score: 0 / 10</p>
+                    </div>
+                </div>
+                <button onclick="resetQuiz()"
+                    class="bg-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Recomeçar</button>
+            </div>
+
+            <div class="space-y-6" id="quiz-container">
+                <!-- Questões geradas via JS -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Todas as palavras reservadas do Python 3.11+
+        const pythonKeywords = [
+            "False", "None", "True", "and", "as", "assert", "async", "await",
+            "break", "class", "continue", "def", "del", "elif", "else", "except",
+            "finally", "for", "from", "global", "if", "import", "in", "is",
+            "lambda", "nonlocal", "not", "or", "pass", "raise", "return", "try",
+            "while", "with", "yield"
+        ];
+
+        // Carregar Keywords na tela
+        const container = document.getElementById('keywords-container');
+        pythonKeywords.forEach(kw => {
+            const span = document.createElement('div');
+            span.className = 'keyword-badge';
+            span.innerText = kw;
+            container.appendChild(span);
+        });
+
+        // Navegação
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
+            document.getElementById(id).classList.add('active');
+            const btn = document.getElementById('btn-' + id);
+            if (btn) btn.classList.add('nav-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleQA(card) {
+            card.classList.toggle('open');
+        }
+
+        // Dados do Jogo
+        const gameData = [
+            { id: "velocidade_media", valid: true },
+            { id: "2_geradores", valid: false },
+            { id: "class", valid: false },
+            { id: "pressao-vapore", valid: false },
+            { id: "temperaturaCritica", valid: true },
+            { id: "False", valid: false },
+            { id: "valor_sensor_$", valid: false },
+            { id: "_status_fixo", valid: true },
+            { id: "if", valid: false },
+            { id: "PI_CONSTANTE", valid: true }
+        ];
+
+        let currentStep = 0;
+        let score = 0;
+        const totalSteps = 5;
+        let activeIndices = [];
+
+        function initGame() {
+            activeIndices = Array.from({ length: gameData.length }, (_, i) => i)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, totalSteps);
+            renderStep();
+        }
+
+        function renderStep() {
+            const dataIndex = activeIndices[currentStep];
+            const display = document.getElementById('game-card-display');
+            display.innerText = gameData[dataIndex].id;
+            display.style.transform = "scale(1)";
+            document.getElementById('game-step').innerText = `Teste ${currentStep + 1}/${totalSteps}`;
+            document.getElementById('game-progress').style.width = `${(currentStep / totalSteps) * 100}%`;
+            document.getElementById('game-feedback').innerText = "";
+        }
+
+        function submitGameAnswer(userChoice) {
+            const dataIndex = activeIndices[currentStep];
+            const feedback = document.getElementById('game-feedback');
+            const display = document.getElementById('game-card-display');
+
+            if (userChoice === gameData[dataIndex].valid) {
+                score += 20;
+                feedback.innerText = "✓ CORRETO: Lógica impecável!";
+                feedback.className = "mt-8 h-8 font-bold text-sm text-emerald-600";
+                display.style.borderColor = "#10b981";
+            } else {
+                feedback.innerText = "✗ ERRO: Verifique as regras léxicas.";
+                feedback.className = "mt-8 h-8 font-bold text-sm text-rose-600";
+                display.style.borderColor = "#f43f5e";
+            }
+
+            document.getElementById('score-text').innerText = `Score: ${score}`;
+
+            setTimeout(() => {
+                display.style.borderColor = "#e2e8f0";
+                currentStep++;
+                if (currentStep < totalSteps) {
+                    renderStep();
+                } else {
+                    display.innerText = "Análise Concluída!";
+                    document.getElementById('game-progress').style.width = "100%";
+                    document.getElementById('game-step').innerText = "FIM";
+                }
+            }, 1000);
+        }
+
+        function resetGame() {
+            currentStep = 0;
+            score = 0;
+            document.getElementById('score-text').innerText = "Score: 0";
+            initGame();
+        }
+
+        // ========== QUESTIONÁRIO MÚLTIPLA ESCOLHA ==========
+        const quizQuestions = [
+            {
+                question: "Qual dos seguintes é um identificador válido em Python?",
+                options: ["2velocidade", "pressão_max", "velocidade_media", "minha-var"],
+                correct: 2
+            },
+            {
+                question: "Por que <code>class</code> não pode ser usado como nome de variável?",
+                options: [
+                    "Porque começa com letra minúscula",
+                    "Porque é uma palavra reservada do Python",
+                    "Porque tem menos de 5 caracteres",
+                    "Porque contém a letra 's'"
+                ],
+                correct: 1
+            },
+            {
+                question: "Qual estilo de escrita é recomendado pela PEP 8 para variáveis e funções?",
+                options: ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"],
+                correct: 2
+            },
+            {
+                question: "O que significa dizer que Python é <i>case sensitive</i>?",
+                options: [
+                    "Que aceita apenas letras minúsculas",
+                    "Que <code>Vazao</code> e <code>vazao</code> são o mesmo identificador",
+                    "Que <code>Vazao</code> e <code>vazao</code> são identificadores diferentes",
+                    "Que palavras reservadas podem ser escritas em maiúsculo"
+                ],
+                correct: 2
+            },
+            {
+                question: "Qual destes NÃO é um caractere permitido em identificadores Python?",
+                options: ["Underscore (_)", "Letra maiúscula (A-Z)", "Hífen (-)", "Dígito (0-9)"],
+                correct: 2
+            },
+            {
+                question: "Qual identificador segue o padrão Camel Case?",
+                options: ["temperatura_critica", "Temperatura_Critica", "temperaturaCritica", "TEMPERATURA_CRITICA"],
+                correct: 2
+            },
+            {
+                question: "Um identificador pode começar com um dígito?",
+                options: [
+                    "Sim, desde que contenha letras também",
+                    "Sim, em qualquer caso",
+                    "Não, é proibido pelas regras de formação",
+                    "Apenas se for seguido de underscore"
+                ],
+                correct: 2
+            },
+            {
+                question: "Qual é o significado convencional de um identificador que começa com underscore, como <code>_status</code>?",
+                options: [
+                    "É uma variável de sistema",
+                    "Indica que a variável é constante",
+                    "Indica uso interno/privado (encapsulamento)",
+                    "É inválido em Python"
+                ],
+                correct: 2
+            },
+            {
+                question: "Quantas palavras reservadas existem no Python 3.11+?",
+                options: ["25", "30", "35", "40"],
+                correct: 2
+            },
+            {
+                question: "Qual dos seguintes é um identificador inválido?",
+                options: ["_sensor_01", "PI_CONSTANTE", "valor_sensor_$", "temperaturaReator"],
+                correct: 2
+            }
+        ];
+
+        let quizScore = 0;
+        const answeredQuestions = new Set();
+
+        function buildQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizQuestions.forEach((q, qi) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white border border-slate-200 p-6 rounded-2xl shadow-sm';
+                card.id = 'quiz-q-' + qi;
+
+                let optionsHTML = '';
+                q.options.forEach((opt, oi) => {
+                    optionsHTML += `
+                        <button onclick="answerQuiz(${qi}, ${oi})" id="quiz-opt-${qi}-${oi}"
+                            class="quiz-option w-full text-left px-5 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-bold shrink-0">${String.fromCharCode(65 + oi)}</span>
+                            <span>${opt}</span>
+                        </button>`;
+                });
+
+                card.innerHTML = `
+                    <p class="font-bold text-slate-700 mb-4"><span class="text-blue-600">${qi + 1}.</span> ${q.question}</p>
+                    <div class="space-y-2">${optionsHTML}</div>
+                    <p id="quiz-fb-${qi}" class="mt-3 text-sm font-bold hidden"></p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function answerQuiz(qi, oi) {
+            if (answeredQuestions.has(qi)) return;
+            answeredQuestions.add(qi);
+
+            const correct = quizQuestions[qi].correct;
+            const correctBtn = document.getElementById('quiz-opt-' + qi + '-' + correct);
+            const selectedBtn = document.getElementById('quiz-opt-' + qi + '-' + oi);
+            const feedback = document.getElementById('quiz-fb-' + qi);
+
+            // Desabilitar todas as opções desta questão
+            quizQuestions[qi].options.forEach((_, j) => {
+                const btn = document.getElementById('quiz-opt-' + qi + '-' + j);
+                btn.disabled = true;
+                btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50');
+                btn.style.cursor = 'default';
+            });
+
+            // Marcar a correta em verde
+            correctBtn.classList.remove('border-slate-200');
+            correctBtn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+            correctBtn.querySelector('span:first-child').classList.remove('border-slate-300');
+            correctBtn.querySelector('span:first-child').classList.add('border-emerald-500', 'bg-emerald-500', 'text-white');
+
+            if (oi === correct) {
+                quizScore++;
+                feedback.textContent = '✓ Correto!';
+                feedback.classList.remove('hidden', 'text-rose-600');
+                feedback.classList.add('text-emerald-600');
+            } else {
+                // Marcar a errada em vermelho
+                selectedBtn.classList.remove('border-slate-200');
+                selectedBtn.classList.add('border-rose-400', 'bg-rose-50', 'text-rose-700');
+                selectedBtn.querySelector('span:first-child').classList.remove('border-slate-300');
+                selectedBtn.querySelector('span:first-child').classList.add('border-rose-400', 'bg-rose-400', 'text-white');
+
+                feedback.textContent = '✗ Incorreto. A resposta certa está destacada em verde.';
+                feedback.classList.remove('hidden', 'text-emerald-600');
+                feedback.classList.add('text-rose-600');
+            }
+
+            document.getElementById('quiz-score-text').innerText = 'Score: ' + quizScore + ' / 10';
+        }
+
+        function resetQuiz() {
+            quizScore = 0;
+            answeredQuestions.clear();
+            document.getElementById('quiz-score-text').innerText = 'Score: 0 / 10';
+            buildQuiz();
+        }
+
+        window.onload = function () {
+            initGame();
+            buildQuiz();
+        };
+    </script>
+</body>
+
+</html>
