@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 5: Tipos de Dados em Python - Engenharia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .page-section {
+            display: none;
+            animation: slideUp 0.4s ease-out forwards;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-active {
+            color: #2563eb;
+            border-bottom: 2px solid #2563eb;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Questionário Accordion */
+        .qa-card {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .qa-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .qa-card.open .qa-answer {
+            max-height: 250px;
+            /* Aumentado para acomodar respostas mais longas */
+        }
+
+        .qa-card.open i {
+            transform: rotate(180deg);
+        }
+
+        /* Game Styles */
+        .game-btn {
+            @apply px-6 py-4 rounded-xl font-bold text-sm transition-all border-2 w-full md:w-auto min-w-[120px];
+        }
+
+        .type-int {
+            @apply border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100;
+        }
+
+        .type-float {
+            @apply border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100;
+        }
+
+        .type-str {
+            @apply border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100;
+        }
+
+        .type-bool {
+            @apply border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100;
+        }
+
+        .data-card {
+            @apply bg-white p-6 rounded-3xl border border-slate-200 shadow-sm transition-all hover:shadow-md;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Navegação -->
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 px-6">
+        <div class="max-w-7xl mx-auto h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer" onclick="showSection('intro')">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fab fa-python text-white"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight">PY<span class="text-blue-600">ENG</span></span>
+            </div>
+            <div class="flex gap-8 text-sm font-semibold text-slate-500">
+                <button onclick="showSection('teoria')" class="nav-btn" id="btn-teoria">Teoria</button>
+                <button onclick="showSection('jogo')" class="nav-btn" id="btn-jogo">Laboratório</button>
+                <button onclick="showSection('quest')" class="nav-btn" id="btn-quest">Questionário</button>
+                <a href="https://drive.google.com/file/d/1CIcp4M6CZit6DFDlft0IwjTbdbeWRnRH/view?usp=sharing"
+                    target="_blank" rel="noopener noreferrer"
+                    class="flex items-center gap-1 text-blue-600 hover:text-blue-800 transition-colors"><i
+                        class="fas fa-file-powerpoint"></i> Slides</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Intro -->
+    <section id="intro" class="page-section active pt-32 pb-20 px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h4 class="text-blue-600 font-bold uppercase tracking-widest text-xs mb-4">Algoritmos Computacionais I •
+                Aula
+                05 • Dados</h4>
+            <h1 class="text-5xl md:text-6xl font-black mb-8 leading-tight">Tipos de Dados <br> em Python</h1>
+            <p class="text-xl text-slate-500 mb-12 max-w-2xl mx-auto">
+                Para um engenheiro, um número não é apenas um número. Entenda como o computador armazena, processa e
+                diferencia grandezas numéricas e não numéricas.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="showSection('teoria')"
+                    class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all">Explorar
+                    a Base Teórica</button>
+                <div class="flex items-center gap-2 text-slate-400 text-sm italic">
+                    <i class="fas fa-book-open"></i> Ref: Item 2.7 Livro Introdução à Programação e aos Algoritmos
+                    (Ribeiro)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Teoria -->
+    <section id="teoria" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-6xl mx-auto">
+
+            <div class="mb-12 text-center">
+                <h2 class="text-3xl font-black mb-4">A Natureza da Informação</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Em Python, cada valor possui um "tipo" subjacente que dita
+                    quais operações matemáticas ou lógicas podem ser realizadas sobre ele. Python possui tipagem
+                    dinâmica e forte.</p>
+            </div>
+
+            <!-- Dados Numéricos -->
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-b border-slate-200 pb-2">
+                <i class="fas fa-calculator text-blue-500"></i> Dados Numéricos
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Inteiros e Grandes Inteiros -->
+                <div class="data-card border-l-4 border-l-blue-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-bold text-xl">Inteiros (<code>int</code>)</h4>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold font-mono">type:
+                            int</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Representam valores exatos sem parte fracionária (ex: contagem de peças, número de iterações).
+                    </p>
+                    <div class="bg-slate-900 rounded-xl p-4 mb-4">
+                        <p class="text-emerald-400 text-xs font-mono mb-1"># Grandes Inteiros em Python 3</p>
+                        <p class="text-slate-300 text-xs font-mono leading-relaxed">Diferente de C/C++, o Python lida
+                            nativamente com inteiros de precisão arbitrária. A memória é alocada dinamicamente,
+                            permitindo cálculos astronômicos sem *overflow*.</p>
+                        <code class="text-white text-sm mt-3 block">massa_terra = 5972000000000000000000000</code>
+                    </div>
+                </div>
+
+                <!-- Ponto Flutuante -->
+                <div class="data-card border-l-4 border-l-emerald-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-bold text-xl">Ponto Flutuante (<code>float</code>)</h4>
+                        <span
+                            class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold font-mono">type:
+                            float</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Representam números reais com precisão decimal. Usado para grandezas contínuas (ex: temperatura,
+                        tensão, distância). O separador decimal é o <b>ponto</b>.
+                    </p>
+                    <div class="bg-slate-900 rounded-xl p-4 mb-4">
+                        <p class="text-emerald-400 text-xs font-mono mb-1"># Limitações Físicas (IEEE 754)</p>
+                        <p class="text-slate-300 text-xs font-mono leading-relaxed">Floats sofrem com limitações de
+                            precisão devido à representação binária finita. Operações sensíveis exigem cuidado.</p>
+                        <code class="text-white text-sm mt-3 block">tensao_v = 12.5</code>
+                        <code class="text-slate-500 text-sm block">notacao_cientifica = 1.25e1</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados Não Numéricos -->
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-b border-slate-200 pb-2">
+                <i class="fas fa-font text-purple-500"></i> Dados Não Numéricos
+            </h3>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
+                <!-- Textos (Strings) -->
+                <div class="data-card border-l-4 border-l-amber-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-bold text-xl">Cadeias de Caracteres (<code>str</code>)</h4>
+                        <span
+                            class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold font-mono">type:
+                            str</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        Conhecidos como <i>Strings</i>. São sequências de caracteres usadas para textos, mensagens de
+                        log, e leituras brutas de sensores antes da conversão.
+                    </p>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 font-mono text-sm text-slate-700">
+                        status_motor = <span class="text-amber-600">"Sobreaquecido"</span><br>
+                        codigo_erro = <span class="text-amber-600">'E-404'</span>
+                    </div>
+                </div>
+
+                <!-- Booleanos -->
+                <div class="data-card border-l-4 border-l-purple-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <h4 class="font-bold text-xl">Lógicos (<code>bool</code>)</h4>
+                        <span
+                            class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold font-mono">type:
+                            bool</span>
+                    </div>
+                    <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                        A Álgebra de Boole na prática. Podem assumir apenas dois valores absolutos: Verdadeiro ou Falso.
+                        Cruciais para controle de fluxo (if/else) em sistemas.
+                    </p>
+                    <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 font-mono text-sm text-slate-700">
+                        valvula_aberta = <span class="text-blue-600 font-bold">True</span><br>
+                        sistema_critico = <span class="text-blue-600 font-bold">False</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Laboratório (Jogo) -->
+    <section id="jogo" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black mb-4">Laboratório de Classificação</h2>
+                <p class="text-slate-500 max-w-lg mx-auto">O processador precisa saber o tipo de dado para alocar
+                    memória. Classifique os literais em Python apresentados abaixo.</p>
+            </div>
+
+            <div
+                class="bg-white rounded-[3rem] p-8 md:p-12 shadow-sm border border-slate-200 text-center relative overflow-hidden">
+                <div id="game-progress" class="absolute top-0 left-0 h-2 bg-blue-600 w-0 transition-all duration-500">
+                </div>
+
+                <div class="mb-10">
+                    <span
+                        class="text-[10px] uppercase font-bold tracking-widest text-slate-400 bg-slate-100 px-3 py-1 rounded-full"
+                        id="game-step">Amostra 1/6</span>
+                    <div id="game-card-display"
+                        class="mt-8 text-3xl md:text-5xl font-mono font-bold text-slate-800 bg-slate-50 py-16 rounded-3xl border-2 border-slate-200 transition-all shadow-inner">
+                        --
+                    </div>
+                </div>
+
+                <p class="text-sm font-bold text-slate-400 mb-4 uppercase tracking-wider">Qual é o tipo nativo (type)
+                    deste dado?</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
+                    <button onclick="submitGameAnswer('int')" class="game-btn type-int">int</button>
+                    <button onclick="submitGameAnswer('float')" class="game-btn type-float">float</button>
+                    <button onclick="submitGameAnswer('str')" class="game-btn type-str">str</button>
+                    <button onclick="submitGameAnswer('bool')" class="game-btn type-bool">bool</button>
+                </div>
+
+                <div id="game-feedback" class="mt-8 h-8 font-bold text-sm"></div>
+            </div>
+
+            <!-- Score -->
+            <div class="mt-8 bg-slate-900 p-6 rounded-2xl flex justify-between items-center text-white">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-xl"><i
+                            class="fas fa-microchip"></i></div>
+                    <div>
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Precisão Analítica</p>
+                        <p id="score-text" class="text-xl font-bold">Score: 0</p>
+                    </div>
+                </div>
+                <button onclick="resetGame()"
+                    class="bg-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Reiniciar
+                    Laboratório</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Questionário -->
+    <section id="quest" class="page-section pt-32 pb-20 px-6">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-3xl font-black mb-4 text-center">Questionário de Tipos de Dados</h2>
+            <p class="text-center text-slate-500 mb-8">Responda às 10 questões sobre tipos de dados em Python.</p>
+
+            <!-- Score do Questionário -->
+            <div
+                class="bg-slate-900 p-5 rounded-2xl flex justify-between items-center text-white mb-10 sticky top-16 z-40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-xl"><i
+                            class="fas fa-star"></i></div>
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Acertos</p>
+                        <p id="quiz-score-text" class="text-xl font-bold">Score: 0 / 10</p>
+                    </div>
+                </div>
+                <button onclick="resetQuiz()"
+                    class="bg-white/10 px-4 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition-all">Recomeçar</button>
+            </div>
+
+            <div class="space-y-6" id="quiz-container">
+                <!-- Questões geradas via JS -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navegação
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('nav-active'));
+            document.getElementById(id).classList.add('active');
+            const btn = document.getElementById('btn-' + id);
+            if (btn) btn.classList.add('nav-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleQA(card) {
+            card.classList.toggle('open');
+        }
+
+        // Dados do Jogo (Tipos de Dados)
+        const gameData = [
+            { display: "42", type: "int" },
+            { display: "3.14159", type: "float" },
+            { display: '"Temperatura Crítica"', type: "str" },
+            { display: "True", type: "bool" },
+            { display: "0.00", type: "float" },
+            { display: "10 ** 100", type: "int" }, // Representa um cálculo de um Grande Inteiro
+            { display: "'Falha no Sensor'", type: "str" },
+            { display: "-273.15", type: "float" },
+            { display: "False", type: "bool" },
+            { display: "-999", type: "int" }
+        ];
+
+        let currentStep = 0;
+        let score = 0;
+        const totalSteps = 6;
+        let activeIndices = [];
+
+        function initGame() {
+            // Embaralhar e pegar N itens
+            activeIndices = Array.from({ length: gameData.length }, (_, i) => i)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, totalSteps);
+            renderStep();
+        }
+
+        function renderStep() {
+            const dataIndex = activeIndices[currentStep];
+            const display = document.getElementById('game-card-display');
+
+            // Formatando o display para simular código
+            let textToShow = gameData[dataIndex].display;
+            if (gameData[dataIndex].type === 'str') {
+                display.innerHTML = `<span class="text-amber-600">${textToShow}</span>`;
+            } else if (gameData[dataIndex].type === 'bool') {
+                display.innerHTML = `<span class="text-blue-600">${textToShow}</span>`;
+            } else {
+                display.innerHTML = `<span class="text-slate-800">${textToShow}</span>`;
+            }
+
+            display.style.transform = "scale(1)";
+            document.getElementById('game-step').innerText = `Amostra ${currentStep + 1}/${totalSteps}`;
+            document.getElementById('game-progress').style.width = `${(currentStep / totalSteps) * 100}%`;
+            document.getElementById('game-feedback').innerText = "";
+
+            // Reabilitar botões
+            document.querySelectorAll('.game-btn').forEach(btn => btn.disabled = false);
+        }
+
+        function submitGameAnswer(userTypeChoice) {
+            const dataIndex = activeIndices[currentStep];
+            const feedback = document.getElementById('game-feedback');
+            const display = document.getElementById('game-card-display');
+            const correctType = gameData[dataIndex].type;
+
+            // Desabilitar botões temporariamente
+            document.querySelectorAll('.game-btn').forEach(btn => btn.disabled = true);
+
+            if (userTypeChoice === correctType) {
+                score += 100;
+                feedback.innerHTML = `<i class="fas fa-check-circle"></i> Correto! É do tipo <b>${correctType}</b>.`;
+                feedback.className = "mt-8 h-8 font-bold text-sm text-emerald-600";
+                display.style.borderColor = "#10b981";
+                display.style.backgroundColor = "#ecfdf5";
+            } else {
+                feedback.innerHTML = `<i class="fas fa-times-circle"></i> Incorreto. O compilador o veria como <b>${correctType}</b>.`;
+                feedback.className = "mt-8 h-8 font-bold text-sm text-rose-600";
+                display.style.borderColor = "#f43f5e";
+                display.style.backgroundColor = "#fff1f2";
+            }
+
+            document.getElementById('score-text').innerText = `Score: ${score}`;
+
+            setTimeout(() => {
+                display.style.borderColor = "#e2e8f0";
+                display.style.backgroundColor = "#f8fafc";
+                currentStep++;
+                if (currentStep < totalSteps) {
+                    renderStep();
+                } else {
+                    display.innerHTML = "<span class='text-slate-500'>Lote de Dados Finalizado!</span>";
+                    document.getElementById('game-progress').style.width = "100%";
+                    document.getElementById('game-step').innerText = "FIM";
+                    document.getElementById('game-feedback').innerText = "";
+                }
+            }, 1800);
+        }
+
+        function resetGame() {
+            currentStep = 0;
+            score = 0;
+            document.getElementById('score-text').innerText = "Score: 0";
+            document.getElementById('game-card-display').style.borderColor = "#e2e8f0";
+            document.getElementById('game-card-display').style.backgroundColor = "#f8fafc";
+            initGame();
+        }
+
+        // ========== QUESTIONÁRIO MÚLTIPLA ESCOLHA ==========
+        const quizQuestions = [
+            {
+                question: "Qual é o tipo do valor <code>42</code> em Python?",
+                options: ["float", "str", "int", "bool"],
+                correct: 2
+            },
+            {
+                question: "O resultado de <code>0.1 + 0.2</code> em Python é exatamente <code>0.3</code>?",
+                options: [
+                    "Sim, Python faz cálculos exatos",
+                    "Não, pois floats usam representação binária finita (IEEE 754)",
+                    "Sim, desde que se use o operador ==",
+                    "Depende da versão do Python"
+                ],
+                correct: 1
+            },
+            {
+                question: "Qual tipo de dado representa valores lógicos Verdadeiro/Falso?",
+                options: ["int", "str", "float", "bool"],
+                correct: 3
+            },
+            {
+                question: "Em Python 3, qual é o limite de tamanho de um inteiro (<code>int</code>)?",
+                options: [
+                    "32 bits, como em C",
+                    "64 bits, como em Java",
+                    "Limitado apenas pela memória disponível (precisão arbitrária)",
+                    "Exatamente 128 bits"
+                ],
+                correct: 2
+            },
+            {
+                question: "Qual é o separador decimal usado em Python para números <code>float</code>?",
+                options: ["Vírgula (,)", "Ponto (.)", "Dois-pontos (:)", "Barra (/)"],
+                correct: 1
+            },
+            {
+                question: "O que acontece ao executar <code>\"Sensor\" + 404</code> em Python?",
+                options: [
+                    "Retorna \"Sensor404\"",
+                    "Retorna 404",
+                    "Gera um erro de tipo (TypeError)",
+                    "Converte automaticamente para string"
+                ],
+                correct: 2
+            },
+            {
+                question: "Qual é o tipo do valor <code>\"3.14\"</code> (com aspas)?",
+                options: ["float", "int", "str", "bool"],
+                correct: 2
+            },
+            {
+                question: "O que significa dizer que Python tem <b>tipagem forte</b>?",
+                options: [
+                    "Que variáveis devem ser declaradas com tipo",
+                    "Que não permite conversões implícitas entre tipos incompatíveis",
+                    "Que só aceita tipos numéricos",
+                    "Que variáveis não podem mudar de tipo"
+                ],
+                correct: 1
+            },
+            {
+                question: "Qual notação representa <code>12.5</code> em notação científica no Python?",
+                options: ["12.5e0", "1.25e1", "125e-2", "Todas as anteriores"],
+                correct: 3
+            },
+            {
+                question: "Qual é o resultado de <code>\"A\" * 3</code> em Python?",
+                options: ["Erro de tipo", "\"A3\"", "\"AAA\"", "3"],
+                correct: 2
+            }
+        ];
+
+        let quizScore = 0;
+        const answeredQuestions = new Set();
+
+        function buildQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizQuestions.forEach((q, qi) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white border border-slate-200 p-6 rounded-2xl shadow-sm';
+                card.id = 'quiz-q-' + qi;
+
+                let optionsHTML = '';
+                q.options.forEach((opt, oi) => {
+                    optionsHTML += `
+                        <button onclick="answerQuiz(${qi}, ${oi})" id="quiz-opt-${qi}-${oi}"
+                            class="quiz-option w-full text-left px-5 py-3 rounded-xl border-2 border-slate-200 text-sm font-medium text-slate-700 hover:border-blue-400 hover:bg-blue-50 transition-all flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-full border-2 border-slate-300 flex items-center justify-center text-xs font-bold shrink-0">${String.fromCharCode(65 + oi)}</span>
+                            <span>${opt}</span>
+                        </button>`;
+                });
+
+                card.innerHTML = `
+                    <p class="font-bold text-slate-700 mb-4"><span class="text-blue-600">${qi + 1}.</span> ${q.question}</p>
+                    <div class="space-y-2">${optionsHTML}</div>
+                    <p id="quiz-fb-${qi}" class="mt-3 text-sm font-bold hidden"></p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function answerQuiz(qi, oi) {
+            if (answeredQuestions.has(qi)) return;
+            answeredQuestions.add(qi);
+
+            const correct = quizQuestions[qi].correct;
+            const correctBtn = document.getElementById('quiz-opt-' + qi + '-' + correct);
+            const selectedBtn = document.getElementById('quiz-opt-' + qi + '-' + oi);
+            const feedback = document.getElementById('quiz-fb-' + qi);
+
+            // Desabilitar todas as opções desta questão
+            quizQuestions[qi].options.forEach((_, j) => {
+                const btn = document.getElementById('quiz-opt-' + qi + '-' + j);
+                btn.disabled = true;
+                btn.classList.remove('hover:border-blue-400', 'hover:bg-blue-50');
+                btn.style.cursor = 'default';
+            });
+
+            // Marcar a correta em verde
+            correctBtn.classList.remove('border-slate-200');
+            correctBtn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+            correctBtn.querySelector('span:first-child').classList.remove('border-slate-300');
+            correctBtn.querySelector('span:first-child').classList.add('border-emerald-500', 'bg-emerald-500', 'text-white');
+
+            if (oi === correct) {
+                quizScore++;
+                feedback.textContent = '✓ Correto!';
+                feedback.classList.remove('hidden', 'text-rose-600');
+                feedback.classList.add('text-emerald-600');
+            } else {
+                // Marcar a errada em vermelho
+                selectedBtn.classList.remove('border-slate-200');
+                selectedBtn.classList.add('border-rose-400', 'bg-rose-50', 'text-rose-700');
+                selectedBtn.querySelector('span:first-child').classList.remove('border-slate-300');
+                selectedBtn.querySelector('span:first-child').classList.add('border-rose-400', 'bg-rose-400', 'text-white');
+
+                feedback.textContent = '✗ Incorreto. A resposta certa está destacada em verde.';
+                feedback.classList.remove('hidden', 'text-emerald-600');
+                feedback.classList.add('text-rose-600');
+            }
+
+            document.getElementById('quiz-score-text').innerText = 'Score: ' + quizScore + ' / 10';
+        }
+
+        function resetQuiz() {
+            quizScore = 0;
+            answeredQuestions.clear();
+            document.getElementById('quiz-score-text').innerText = 'Score: 0 / 10';
+            buildQuiz();
+        }
+
+        // Iniciar jogo e quiz ao carregar
+        window.onload = function () {
+            initGame();
+            buildQuiz();
+        };
+    </script>
+</body>
+
+</html>
