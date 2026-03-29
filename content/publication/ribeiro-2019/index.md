@@ -5,8 +5,9 @@ title: Introdução à Programação e aos Algoritmos
 subtitle: ''
 summary: Muitas vezes considerada responsável por dificultar os primeiros semestres
   de Ciência da Computação, Sistemas de Informação, Engenharias e Matemática, a disciplina
-  de Programação ganha agora um importante conteúdo para desmistificar esse conceito.Introdução
-  à Programação e aos Algoritmos faz uso da linguagem Python para iniciação do leitor
+  de Programação ganha agora um importante conteúdo para desmistificar esse conceito. 
+  
+  Introdução à Programação e aos Algoritmos faz uso da linguagem Python para iniciação do leitor
   na área. Partindo da definição de conteúdos básicos – como bit, byte, códigos binários,
   octais e hexadecimais – para, então, chegar aos algoritmos e à programação propriamente
   dita, o livro suaviza a abordagem do assunto nos primeiros períodos universitários.
@@ -60,13 +61,17 @@ publication: '*LTC*'
 
 links:
 - icon_pack: fa
-  icon: wallet
+  icon: browsers
+  name: site
+  url: livro
+
+- icon_pack: fa
+  icon: amazon
   name: comprar
   url: https://amzn.to/4aY4eBW
 
 - icon_pack: fa
   icon: book-open
   name: Rede Sirius
-  url: http://catalogo-redesirius.uerj.br/sophia_web/index.asp?codigo_sophia=272624
-url_pdf: https://www.grupogen.com.br/introducao-a-programacao-e-aos-algoritmos
+  url: https://app.minhabiblioteca.com.br/books/9788521636410
 ---
