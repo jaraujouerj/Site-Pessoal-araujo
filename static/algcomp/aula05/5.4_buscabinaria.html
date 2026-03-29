@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 5.4: Busca Binária (Item 2.10)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+            font-variant-ligatures: none;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .binary-node {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .active-range {
+            background-color: #dbeafe;
+            border-color: #3b82f6;
+        }
+
+        .discarded {
+            opacity: 0.3;
+            transform: scale(0.9);
+            grayscale: 100%;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Header -->
+    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-lg border-b border-emerald-500/30">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-divide text-emerald-400 text-2xl"></i>
+                <span class="font-bold tracking-tight uppercase text-sm md:text-base">Eng.Comp <span
+                        class="text-emerald-400">Aula 5.4</span></span>
+            </div>
+            <div class="flex gap-4 md:gap-8 text-xs md:text-sm font-medium">
+                <button onclick="showSection('conceito')"
+                    class="hover:text-emerald-400 transition-colors">Conceito</button>
+                <button onclick="showSection('logica')" class="hover:text-emerald-400 transition-colors">Lógica
+                    2.10</button>
+                <button onclick="showSection('simulador')"
+                    class="hover:text-emerald-400 transition-colors">Simulador</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto p-6 md:p-12">
+
+        <!-- SEÇÃO 1: CONCEITO E VANTAGEM -->
+        <section id="conceito" class="page-section active">
+            <div class="mb-10 text-center">
+                <h1 class="text-4xl font-extrabold mb-4">Busca Binária: Eficiência Logarítmica</h1>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">O salto de performance da busca sequencial para a
+                    busca binária.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-rose-600 font-bold mb-3 italic">Busca Sequencial (2.3)</h3>
+                    <p class="text-sm text-slate-600">Verifica um por um. Em uma lista de 1.000.000 de itens, o pior
+                        caso exige <strong>1.000.000 de comparações</strong>.</p>
+                    <div class="mt-4 h-2 bg-rose-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-rose-500 w-full"></div>
+                    </div>
+                    <p class="mt-2 text-xs font-bold text-rose-700">Complexidade: O(n)</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-emerald-200 shadow-sm ring-2 ring-emerald-50">
+                    <h3 class="text-emerald-600 font-bold mb-3">Busca Binária (2.10)</h3>
+                    <p class="text-sm text-slate-600">Divide a lista ao meio a cada passo. No mesmo milhão de itens,
+                        exige no máximo <strong>20 comparações</strong>.</p>
+                    <div class="mt-4 h-2 bg-emerald-100 rounded-full overflow-hidden">
+                        <div class="h-full bg-emerald-500 w-[5%]"></div>
+                    </div>
+                    <p class="mt-2 text-xs font-bold text-emerald-700">Complexidade: O(log n)</p>
+                </div>
+            </div>
+
+            <div class="bg-blue-900 text-white p-8 rounded-3xl shadow-xl">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle text-amber-400"></i> O Pré-requisito Fundamental
+                </h3>
+                <p class="text-blue-100 leading-relaxed">
+                    Diferente da busca sequencial, a busca binária <strong>exige que a lista esteja ordenada</strong>.
+                    Sem ordenação,
+                    a lógica de descartar metades é impossível. Na engenharia, ordenamos dados uma vez para buscá-los
+                    milhares de vezes com alta performance.
+                </p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 2: LÓGICA PASSO A PASSO -->
+        <section id="logica" class="page-section">
+            <h2 class="text-3xl font-black mb-8 text-center">Raciocínio de Desenvolvimento</h2>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-10">
+                <div class="p-6 bg-white rounded-2xl shadow-sm border-t-4 border-emerald-500">
+                    <h4 class="font-bold mb-2">1. Definir Limites</h4>
+                    <p class="text-xs text-slate-500 italic mb-2">Esquerda e Direita</p>
+                    <p class="text-sm text-slate-600">Marcamos o início (0) e o fim (n-1) do vetor de dados.</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl shadow-sm border-t-4 border-emerald-500">
+                    <h4 class="font-bold mb-2">2. Calcular o Meio</h4>
+                    <p class="text-xs text-slate-500 italic mb-2">Ponto de Divisão</p>
+                    <p class="text-sm text-slate-600">Calculamos <code
+                            class="bg-slate-100 px-1">m = (esq + dir) // 2</code> para testar o elemento central.</p>
+                </div>
+                <div class="p-6 bg-white rounded-2xl shadow-sm border-t-4 border-emerald-500">
+                    <h4 class="font-bold mb-2">3. Comparar e Descartar</h4>
+                    <p class="text-xs text-slate-500 italic mb-2">Redução do Espaço</p>
+                    <p class="text-sm text-slate-600">Se o alvo é menor que o meio, descartamos a metade direita. Se
+                        maior, descartamos a esquerda.</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900 rounded-2xl p-6 shadow-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-emerald-400 font-mono text-sm">algoritmo_busca_binaria.py</span>
+                    <i class="fas fa-copy text-slate-500 cursor-pointer hover:text-white"></i>
+                </div>
+                <pre class="code-font text-sm text-slate-300">
+def busca_binaria(L, x):
+    inicio = 0
+    fim = len(L) - 1
+    
+    while inicio <= fim:
+        meio = (inicio + fim) // 2
+        if (L[meio] == x):
+            return meio  # Encontrado!
+        elif (L[meio] < x):
+            inicio = meio + 1 # Busca na direita
+        else:
+            fim = meio - 1 # Busca na esquerda
+            
+    return -1 # Não encontrado</pre>
+            </div>
+        </section>
+
+        <!-- SEÇÃO 3: SIMULADOR -->
+        <section id="simulador" class="page-section">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black mb-2">Simulador "Dividir para Conquistar"</h2>
+                <p class="text-slate-500">Observe como metade da memória é descartada a cada comparação.</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex flex-wrap gap-2 justify-center mb-12" id="array-container">
+                    <!-- Gerado via JS -->
+                </div>
+
+                <div class="flex flex-col md:flex-row gap-4 items-center justify-center">
+                    <div class="relative">
+                        <input type="number" id="search-val" placeholder="Valor (0-99)"
+                            class="pl-10 pr-4 py-2 border rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none w-44">
+                        <i class="fas fa-search absolute left-3 top-3 text-slate-400"></i>
+                    </div>
+                    <button onclick="runBinarySearch()"
+                        class="bg-emerald-600 text-white px-8 py-2 rounded-xl font-bold hover:bg-emerald-700 transition-all shadow-md">Executar
+                        Busca</button>
+                    <button onclick="resetSim()"
+                        class="text-slate-500 font-medium hover:text-slate-800">Resetar</button>
+                </div>
+            </div>
+
+            <div id="status-log"
+                class="bg-slate-100 p-6 rounded-2xl border-2 border-dashed border-slate-300 text-center italic text-slate-500">
+                Insira um valor para iniciar a simulação...
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Lista ordenada (obrigatório para busca binária)
+        const data = [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 72, 81, 89, 94, 98];
+
+        function initArray() {
+            const container = document.getElementById('array-container');
+            container.innerHTML = '';
+            data.forEach((val, i) => {
+                const el = document.createElement('div');
+                el.id = `node-${i}`;
+                el.className = "binary-node w-12 h-12 flex items-center justify-center bg-white border-2 border-slate-200 rounded-lg font-bold text-slate-700 shadow-sm";
+                el.innerText = val;
+                container.appendChild(el);
+            });
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if (id === 'simulador') {
+                resetSim();
+            }
+        }
+
+        async function runBinarySearch() {
+            const x = parseInt(document.getElementById('search-val').value);
+            if (isNaN(x)) return;
+
+            const log = document.getElementById('status-log');
+            log.className = "bg-slate-900 text-emerald-400 p-6 rounded-2xl code-font text-sm text-left shadow-inner italic-none";
+            log.innerHTML = `> Iniciando busca por ${x}...<br>`;
+
+            resetVisuals();
+
+            let esq = 0;
+            let dir = data.length - 1;
+            let found = false;
+
+            while (esq <= dir) {
+                // Highlight range atual
+                for (let i = 0; i < data.length; i++) {
+                    const node = document.getElementById(`node-${i}`);
+                    if (i < esq || i > dir) {
+                        node.classList.add('discarded');
+                    } else {
+                        node.classList.add('active-range');
+                    }
+                }
+
+                let meio = Math.floor((esq + dir) / 2);
+                const meioNode = document.getElementById(`node-${meio}`);
+
+                meioNode.classList.remove('active-range');
+                meioNode.classList.add('bg-blue-600', 'text-white', 'scale-125', 'z-10', 'ring-4', 'ring-blue-200');
+
+                log.innerHTML += `> Meio: índice ${meio} (valor ${data[meio]})<br>`;
+                await new Promise(r => setTimeout(r, 1200));
+
+                if (data[meio] === x) {
+                    meioNode.classList.replace('bg-blue-600', 'bg-emerald-500');
+                    log.innerHTML += `<span class='text-white font-bold'>>> Encontrado na posição ${meio}!</span>`;
+                    found = true;
+                    break;
+                } else if (data[meio] < x) {
+                    log.innerHTML += `> ${data[meio]} < ${x}. Descartando metade esquerda.<br>`;
+                    esq = meio + 1;
+                } else {
+                    log.innerHTML += `> ${data[meio]} > ${x}. Descartando metade direita.<br>`;
+                    dir = meio - 1;
+                }
+
+                await new Promise(r => setTimeout(r, 800));
+                resetVisuals();
+            }
+
+            if (!found) {
+                log.innerHTML += `<span class='text-rose-400 font-bold'>>> Valor ${x} não existe no vetor.</span>`;
+            }
+        }
+
+        function resetVisuals() {
+            for (let i = 0; i < data.length; i++) {
+                const node = document.getElementById(`node-${i}`);
+                node.className = "binary-node w-12 h-12 flex items-center justify-center bg-white border-2 border-slate-200 rounded-lg font-bold text-slate-700 shadow-sm";
+            }
+        }
+
+        function resetSim() {
+            document.getElementById('search-val').value = '';
+            document.getElementById('status-log').className = "bg-slate-100 p-6 rounded-2xl border-2 border-dashed border-slate-300 text-center italic text-slate-500";
+            document.getElementById('status-log').innerHTML = "Insira um valor para iniciar a simulação...";
+            initArray();
+        }
+
+        // Init
+        initArray();
+    </script>
+</body>
+
+</html>
