@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 5.3: Variáveis e Constantes em Python</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Accordion Questionário */
+        .question-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+
+        .question-card:hover {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+        }
+
+        .answer-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .question-card.open .answer-content {
+            max-height: 200px;
+            padding-top: 1rem;
+        }
+
+        .question-card.open i {
+            transform: rotate(180deg);
+            color: #3b82f6;
+        }
+
+        /* Game Elements */
+        .drop-zone {
+            min-height: 80px;
+            border: 2px dashed #cbd5e1;
+            transition: all 0.3s;
+        }
+
+        .drop-zone.hover {
+            border-color: #3b82f6;
+            background-color: #dbeafe;
+        }
+
+        .draggable {
+            cursor: grab;
+            user-select: none;
+        }
+
+        .exercise-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .exercise-answer.open {
+            max-height: 600px;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <!-- Navegação Superior -->
+    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-microchip text-blue-400 text-2xl"></i>
+                <span class="font-bold tracking-tight">ENG.COMP <span class="text-blue-400">AULA 5.3</span></span>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <button onclick="showSection('teoria')" class="hover:text-blue-400 transition-colors">Teoria
+                    (2.8-2.9)</button>
+                <button onclick="showSection('jogo')" class="hover:text-blue-400 transition-colors">Desafio do
+                    Compilador</button>
+                <button onclick="showSection('quest')"
+                    class="hover:text-blue-400 transition-colors">Questionário</button>
+                <button onclick="showSection('exercicios')"
+                    class="hover:text-blue-400 transition-colors">Exercícios</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="max-w-5xl mx-auto p-6 md:p-12">
+
+        <!-- SEÇÃO: TEORIA -->
+        <section id="teoria" class="page-section active">
+            <div class="mb-10">
+                <h1 class="text-4xl font-extrabold mb-4">Armazenamento e Nomeação</h1>
+                <p class="text-slate-500 text-lg">Entendendo como Python gerencia espaços na memória para variáveis e
+                    constantes.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <!-- Variáveis (2.8) -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">2.8 Variáveis</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Uma variável é um espaço nomeado na memória principal cujo conteúdo pode ser alterado durante a
+                        execução do programa. Em engenharia, usamos variáveis para armazenar leituras de sensores,
+                        estados de máquinas ou resultados parciais de cálculos.
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <p class="text-xs font-bold text-slate-400 mb-2 uppercase">Exemplo em Python</p>
+                        <code class="code-font text-blue-700">temperatura = 25.4</code><br>
+                        <code class="code-font text-slate-500"># O valor pode mudar depois:</code><br>
+                        <code class="code-font text-blue-700">temperatura = 27.1</code>
+                    </div>
+                </div>
+
+                <!-- Constantes (2.9) -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold">2.9 Constantes</h2>
+                    </div>
+                    <p class="text-slate-600 mb-6 leading-relaxed">
+                        Constantes são valores que <strong>não devem</strong> ser alterados. Python não possui um tipo
+                        "constante"
+                        nativo que impeça a alteração, por isso usamos a <strong>convenção</strong>: nomes em letras
+                        MAIÚSCULAS
+                        indicam que o valor é fixo.
+                    </p>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <p class="text-xs font-bold text-slate-400 mb-2 uppercase">Exemplo de Convenção</p>
+                        <code class="code-font text-amber-700 uppercase font-bold">PI = 3.14159</code><br>
+                        <code class="code-font text-amber-700 uppercase font-bold">GRAVIDADE = 9.81</code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Identificadores -->
+            <div class="bg-blue-600 text-white p-8 rounded-3xl shadow-lg">
+                <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                    <i class="fas fa-info-circle"></i> Regras para Identificadores (Nomes)
+                </h3>
+                <ul class="grid md:grid-cols-2 gap-4 text-sm opacity-90">
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Deve começar com letra ou
+                        underline (_).</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Não pode conter espaços ou
+                        símbolos (@, $, %).</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-check-circle"></i> Case-sensitive: 'vazao' !=
+                        'Vazao'.</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-times-circle"></i> Não pode ser uma palavra
+                        reservada (if, for, int).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: JOGO -->
+        <section id="jogo" class="page-section">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-black mb-2">Desafio do Compilador</h2>
+                <p class="text-slate-500">Separe os identificadores válidos dos inválidos em Python.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Itens para arrastar -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+                    <h4 class="font-bold mb-4 text-center border-b pb-2">Literais e Nomes</h4>
+                    <div id="pool" class="space-y-2">
+                        <div draggable="true" ondragstart="drag(event)" id="item1"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            velocidade_max</div>
+                        <div draggable="true" ondragstart="drag(event)" id="item2"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            2_sensor</div>
+                        <div draggable="true" ondragstart="drag(event)" id="item3"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            pressao@ponta</div>
+                        <div draggable="true" ondragstart="drag(event)" id="item4"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            _voltagem</div>
+                        <div draggable="true" ondragstart="drag(event)" id="item5"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            import</div>
+                        <div draggable="true" ondragstart="drag(event)" id="item6"
+                            class="draggable bg-slate-100 p-3 rounded-lg text-sm font-mono border border-slate-200 hover:bg-white transition-colors">
+                            MASSA_KG</div>
+                    </div>
+                </div>
+
+                <!-- Zonas de Drop -->
+                <div class="space-y-8 col-span-2">
+                    <div class="bg-emerald-50 p-6 rounded-2xl border-2 border-emerald-200">
+                        <h4 class="text-emerald-700 font-bold mb-3 flex items-center gap-2">
+                            <i class="fas fa-thumbs-up"></i> Identificadores VÁLIDOS
+                        </h4>
+                        <div id="valid-zone" ondrop="drop(event, true)" ondragover="allowDrop(event)"
+                            class="drop-zone rounded-xl flex flex-wrap gap-2 p-4"></div>
+                    </div>
+
+                    <div class="bg-rose-50 p-6 rounded-2xl border-2 border-rose-200">
+                        <h4 class="text-rose-700 font-bold mb-3 flex items-center gap-2">
+                            <i class="fas fa-thumbs-down"></i> Identificadores INVÁLIDOS
+                        </h4>
+                        <div id="invalid-zone" ondrop="drop(event, false)" ondragover="allowDrop(event)"
+                            class="drop-zone rounded-xl flex flex-wrap gap-2 p-4"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button onclick="checkGame()"
+                    class="bg-slate-900 text-white px-8 py-3 rounded-full font-bold hover:bg-slate-800 transition-all shadow-lg">Validar
+                    Compilação</button>
+                <p id="game-feedback" class="mt-4 font-bold"></p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: QUESTIONÁRIO -->
+        <section id="quest" class="page-section">
+            <h2 class="text-3xl font-black mb-8 text-center">Autoavaliação</h2>
+
+            <div class="space-y-4 max-w-2xl mx-auto">
+                <!-- Questão 1 -->
+                <div class="question-card bg-white p-6 rounded-2xl" onclick="toggleAnswer(this)">
+                    <div class="flex justify-between items-center gap-4">
+                        <span class="font-semibold text-slate-700">1. Qual a principal diferença entre uma variável e
+                            uma constante para o fluxo de um algoritmo?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </div>
+                    <div class="answer-content text-slate-500 text-sm">
+                        Conforme o item 2.8 e 2.9, a **variável** armazena dados que sofrem transformações (como o tempo
+                        em uma simulação), enquanto a **constante** representa valores fixos que dão contexto e
+                        segurança ao código (como limites físicos de um motor), impedindo erros por alteração acidental.
+                    </div>
+                </div>
+
+                <!-- Questão 2 -->
+                <div class="question-card bg-white p-6 rounded-2xl" onclick="toggleAnswer(this)">
+                    <div class="flex justify-between items-center gap-4">
+                        <span class="font-semibold text-slate-700">2. Por que o nome <code
+                                class="bg-slate-100 px-1 rounded">2_eixo</code> é considerado inválido em Python?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </div>
+                    <div class="answer-content text-slate-500 text-sm">
+                        Em Python (e na maioria das linguagens de engenharia), identificadores não podem começar com
+                        números. Isso ocorre porque o compilador tentaria interpretar o início como um valor numérico
+                        literal e falharia ao encontrar letras no sufixo.
+                    </div>
+                </div>
+
+                <!-- Questão 3 -->
+                <div class="question-card bg-white p-6 rounded-2xl" onclick="toggleAnswer(this)">
+                    <div class="flex justify-between items-center gap-4">
+                        <span class="font-semibold text-slate-700">3. Como Python lida com a proteção de
+                            constantes?</span>
+                        <i class="fas fa-chevron-down text-slate-400 transition-transform"></i>
+                    </div>
+                    <div class="answer-content text-slate-500 text-sm">
+                        Diferente de linguagens como C++ (const) ou Java (final), Python não protege o valor em tempo de
+                        execução. Ele depende da disciplina do engenheiro em usar nomes em MAIÚSCULAS para sinalizar:
+                        "não mude este valor".
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: EXERCÍCIOS -->
+        <section id="exercicios" class="page-section">
+            <h2 class="text-3xl font-black mb-8 text-center">Exercícios</h2>
+
+            <!-- Exercício 1 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center font-bold">
+                        1</div>
+                    <h3 class="text-xl font-bold">Quadrado da Hipotenusa (Teorema de Pitágoras)</h3>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    Escreva um programa que calcule o quadrado da hipotenusa de um triângulo retângulo de catetos
+                    <strong>3</strong> e <strong>4</strong>, usando o Teorema de Pitágoras: <code
+                        class="bg-slate-100 px-2 py-1 rounded">h² = a² + b²</code>.
+                </p>
+                <button onclick="toggleExercise(this)"
+                    class="flex items-center gap-2 text-blue-600 font-semibold text-sm mb-4 hover:text-blue-800 transition-colors">
+                    <i class="fas fa-eye"></i> Mostrar Resposta
+                </button>
+                <div class="exercise-answer">
+                    <div class="bg-slate-900 rounded-2xl p-6 shadow-inner mb-4">
+                        <span class="text-emerald-400 font-mono text-sm">exercicio1.py</span>
+                        <pre class="code-font text-sm text-slate-300 mt-3">
+a = 3
+b = 4
+
+hipotenusa_quadrado = a**2 + b**2
+
+print("O quadrado da hipotenusa é:", hipotenusa_quadrado)</pre>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <p class="text-sm text-emerald-800"><i class="fas fa-terminal mr-2"></i><strong>Saída
+                                esperada:</strong> O quadrado da hipotenusa é: 25</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 2 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center font-bold">
+                        2</div>
+                    <h3 class="text-xl font-bold">Área da Superfície de uma Esfera</h3>
+                </div>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    Escreva um programa que calcule a área da superfície de uma esfera de raio <strong>5</strong>,
+                    usando a fórmula: <code class="bg-slate-100 px-2 py-1 rounded">A = 4 × π × r²</code>.
+                </p>
+                <button onclick="toggleExercise(this)"
+                    class="flex items-center gap-2 text-blue-600 font-semibold text-sm mb-4 hover:text-blue-800 transition-colors">
+                    <i class="fas fa-eye"></i> Mostrar Resposta
+                </button>
+                <div class="exercise-answer">
+                    <div class="bg-slate-900 rounded-2xl p-6 shadow-inner mb-4">
+                        <span class="text-emerald-400 font-mono text-sm">exercicio2.py</span>
+                        <pre class="code-font text-sm text-slate-300 mt-3">
+PI = 3.1415
+
+raio = 5
+
+area = 4 * PI * raio**2
+
+print("A área da esfera é:", area)</pre>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <p class="text-sm text-emerald-800"><i class="fas fa-terminal mr-2"></i><strong>Saída
+                                esperada:</strong> A área da esfera é: 314.15</p>
+                    </div>
+                </div>
+
+                <button onclick="toggleExercise(this)"
+                    class="flex items-center gap-2 text-violet-600 font-semibold text-sm mb-4 mt-4 hover:text-violet-800 transition-colors">
+                    <i class="fas fa-eye"></i> Mostrar Resposta Avançada
+                </button>
+                <div class="exercise-answer">
+                    <div class="bg-slate-900 rounded-2xl p-6 shadow-inner mb-4">
+                        <span class="text-emerald-400 font-mono text-sm">exercicio2_avancado.py</span>
+                        <pre class="code-font text-sm text-slate-300 mt-3">
+import math
+
+raio = 5
+
+area = 4 * math.pi * raio**2
+
+print("A área da esfera é:", area)</pre>
+                    </div>
+                    <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <p class="text-sm text-emerald-800"><i class="fas fa-terminal mr-2"></i><strong>Saída
+                                esperada:</strong> A área da esfera é: 314.1592653589793</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercício 3 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-violet-100 text-violet-600 rounded-lg flex items-center justify-center font-bold">
+                        3</div>
+                    <h3 class="text-xl font-bold">Conversão de Temperatura</h3>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                    Escreva um programa que converta a temperatura de <strong>100°F</strong> (Fahrenheit) para Celsius,
+                    usando a fórmula: <code class="bg-slate-100 px-2 py-1 rounded">C = (F - 32) × 5 / 9</code>.
+                    O resultado deve ser armazenado em uma variável e exibido com <code
+                        class="bg-slate-100 px-1 rounded">print()</code>.
+                </p>
+            </div>
+
+            <!-- Exercício 4 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-rose-100 text-rose-600 rounded-lg flex items-center justify-center font-bold">
+                        4</div>
+                    <h3 class="text-xl font-bold">Velocidade Média</h3>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                    Um carro percorreu <strong>150 km</strong> em <strong>2.5 horas</strong>. Escreva um programa que
+                    calcule
+                    a velocidade média usando a fórmula: <code class="bg-slate-100 px-2 py-1 rounded">V = d / t</code>.
+                    Use variáveis para a distância e o tempo, e uma constante (em maiúsculas) não é necessária aqui —
+                    mas pense: quando seria?
+                </p>
+            </div>
+
+            <!-- Exercício 5 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200">
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 bg-cyan-100 text-cyan-600 rounded-lg flex items-center justify-center font-bold">
+                        5</div>
+                    <h3 class="text-xl font-bold">Energia Cinética</h3>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                    Escreva um programa que calcule a energia cinética de um objeto com massa <strong>10 kg</strong>
+                    e velocidade <strong>3 m/s</strong>, usando a fórmula: <code
+                        class="bg-slate-100 px-2 py-1 rounded">Ec = m × v² / 2</code>.
+                    Utilize variáveis com nomes descritivos seguindo as regras de identificadores vistas na aula.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Gerenciador de Seções
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Accordion Logic
+        function toggleAnswer(element) {
+            const isOpen = element.classList.contains('open');
+            document.querySelectorAll('.question-card').forEach(card => card.classList.remove('open'));
+            if (!isOpen) element.classList.add('open');
+        }
+
+        // Lógica do Jogo de Arrastar (Drag & Drop)
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev, isValidZone) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var el = document.getElementById(data);
+            ev.target.closest('.drop-zone').appendChild(el);
+        }
+
+        function checkGame() {
+            const validItems = document.getElementById('valid-zone').children;
+            const invalidItems = document.getElementById('invalid-zone').children;
+            const feedback = document.getElementById('game-feedback');
+
+            const expectedValid = ['item1', 'item4', 'item6']; // vel_max, _voltagem, MASSA_KG
+            const expectedInvalid = ['item2', 'item3', 'item5']; // 2_sensor, pressao@ponta, import
+
+            let correct = 0;
+            let total = expectedValid.length + expectedInvalid.length;
+
+            for (let item of validItems) {
+                if (expectedValid.includes(item.id)) correct++;
+            }
+            for (let item of invalidItems) {
+                if (expectedInvalid.includes(item.id)) correct++;
+            }
+
+            if (correct === total) {
+                feedback.innerText = "Parabéns! Código limpo e compilável. (100% de acerto)";
+                feedback.className = "mt-4 font-bold text-emerald-600";
+            } else {
+                feedback.innerText = `Ainda há erros de sintaxe. Você acertou ${correct} de ${total}.`;
+                feedback.className = "mt-4 font-bold text-rose-600";
+            }
+        }
+
+        // Toggle de resposta dos exercícios
+        function toggleExercise(btn) {
+            const answer = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            const isOpen = answer.classList.contains('open');
+            answer.classList.toggle('open');
+            if (isOpen) {
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+                btn.childNodes[btn.childNodes.length - 1].textContent = ' Mostrar Resposta';
+            } else {
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+                btn.childNodes[btn.childNodes.length - 1].textContent = ' Ocultar Resposta';
+            }
+        }
+    </script>
+</body>
+
+</html>
