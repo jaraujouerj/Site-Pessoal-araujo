@@ -27,7 +27,6 @@ subtitle:
 #   spacing:
 #     padding: ["20px", "0", "20px", "0"]
 ---
-Você pode comprar meu livro na LTC com o cupom de desconto: EAU-RIBEIRO25.
 {{< cite page="/publication/ribeiro-2019" view="2" >}}
 
 ## Traduções e Revisões Técnicas
