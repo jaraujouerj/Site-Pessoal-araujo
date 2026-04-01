@@ -87,8 +87,8 @@ Introdução a algoritmos e lógica de programação. Tipos de dados básicos. E
 </thead>
 <tbody>
 <tr><td>05</td><td><b>Bases da Programação:</b> <a href="/algcomp/aula05/5.1_identificadores.html">Identificadores</a>, <a href="/algcomp/aula05/5.2_dados.html">Dados Numéricos</a>, <a href="/algcomp/aula05/5.3_tiposeconstantes.html">Tipos e Constantes Numéricas</a>,  <a href="/algcomp/aula05/5.4_buscabinaria.html">Busca Binária</a>.</td><td>Cap. 2 (2.6-2.9). </td></tr>
-<tr><td>06</td><td><b>Estrutura básica de programa:</b> Sequência, Entrada e saída, Expressões simples</td><td>Cap. 3.1.1</td></tr>
-<tr><td>07</td><td><b>Estruturas de decisão (if):</b> Estruturas de Seleção simples e compostas (if/else).</td><td>Cap. 3 (3.1-3.2)</td></tr>
+<tr><td>06</td><td><b><a href="https://drive.google.com/file/d/1Zf8G0teWrhnbzmeG42SC3PnTzugwhFLZ/view?usp=sharing">Estrutura básica de programa</a>:</b> Sequência, Entrada e saída, Expressões simples</td><td>Cap. 3.1.1</td></tr>
+<tr><td>07</td><td><b><a href="https://drive.google.com/file/d/1HF8bNnVzNdGzWvZzpI29UPbhLaDfvUxi/view?usp=sharing">Estruturas de decisão (if)</a>:</b> Estruturas de Seleção simples e compostas (if/else).</td><td>Cap. 3 (3.1-3.2)</td></tr>
 <tr><td>08</td><td><b>Iteração:</b> While e laços contados.<br><b>Condições Complexas:</b> Desafios de lógica (ex: cálculo de ano bissexto).</td><td>Cap.3.1.3, Cap 3.5-3.6<br>Cap. 3</td></tr>
 <tr><td>09</td><td><b>Laboratório de problemas reais (validação, médias, regras):</b> Exercícios com médias e validação de dados.</td><td>Cap. 3 (3.4)</td></tr>
 <tr><td>10</td><td><b>Subalgoritmos:</b> Definição de funções, fluxo de execução e return.</td><td>Cap. 4 (4.1-4.3)</td></tr>
